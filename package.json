@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx run-many -t serve",
-    "build": "nx run-many -t build",
+    "start": "nx run-many -t serve --exclude=nativescript-mobile",
+    "build": "nx run-many -t build --exclude=nativescript-mobile",
+    "android:development": "npx nx run fe-mobile-nativescript:android:development",
+    "build:android": "cd apps && cd fe-mobile-nativescript && tns build android",
+    "ios:development": "npx nx run fe-mobile-nativescript:ios",
     "prisma-generate": "npx nx run prisma-client:prisma-generate",
     "prisma-pull": "npx nx run prisma-client:prisma-pull",
     "prisma-push": "npx nx run prisma-client:prisma-push",
@@ -12,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^19.0.0",
     "@angular/common": "~19.2.0",
     "@angular/compiler": "~19.2.0",
     "@angular/core": "~19.2.0",
@@ -19,6 +23,8 @@
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
     "@angular/router": "~19.2.0",
+    "@nativescript/angular": "^19.0.0",
+    "@nativescript/core": "~8.9.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/mapped-types": "^2.1.0",
@@ -40,8 +46,13 @@
     "@angular/compiler-cli": "~19.2.0",
     "@angular/language-service": "~19.2.0",
     "@eslint/js": "^9.8.0",
+    "@nativescript/nx": "^21.0.0",
+    "@nativescript/tailwind": "^2.1.0",
+    "@nativescript/types": "~8.9.0",
+    "@nativescript/webpack": "~5.0.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
+    "@ngtools/webpack": "^19.0.0",
     "@nx-tools/nx-prisma": "^6.5.0",
     "@nx/eslint": "21.1.3",
     "@nx/eslint-plugin": "21.1.3",
@@ -58,6 +69,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@typescript-eslint/utils": "^8.19.0",
+    "ajv": "~8.17.0",
     "angular-eslint": "^19.2.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
@@ -67,7 +79,7 @@
     "jest-environment-node": "^29.7.0",
     "jest-preset-angular": "~14.4.0",
     "jsonc-eslint-parser": "^2.1.0",
-    "nx": "21.1.3",
+    "nx": "21.2.0",
     "prettier": "^3.5.3",
     "prettier-eslint": "^16.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
@@ -75,6 +87,7 @@
     "prisma-class-validator-generator": "^5.0.0",
     "prisma-docs-generator": "^0.8.0",
     "prisma-generator-typescript-interfaces": "^2.1.0",
+    "tailwindcss": "~3.4.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
@@ -84,5 +97,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "nativescript-nx": {
+    "prefix": "travel-planer",
+    "framework": "angular"
+  }
 }

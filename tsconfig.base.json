@@ -15,12 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@travel-planer/data-model": [
-        "libs/travel-planer/data-model/src/index.ts"
-      ],
-      "@travel-planer/prisma-client": [
-        "libs/travel-planer/prisma-client/src/index.ts"
-      ]
+      "@travel-planer/data-model": ["libs/travel-planer/data-model/src/index.ts"],
+      "@travel-planer/prisma-client": ["libs/travel-planer/prisma-client/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
