@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+generator class_validator {
+  provider = "prisma-class-validator-generator"
+  output   = "../src/generated/validator"
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+  output   = "../../../../docs/prisma-docs"
+}
+
+generator typescriptInterfaces {
+  provider = "prisma-generator-typescript-interfaces"
+  output   = "../../data-model/src/generated/dto/interfaces.ts"
+  prettier = "true"
+}
+
+generator typescriptInterfacesJson {
+  provider    = "prisma-generator-typescript-interfaces"
+  output      = "../../data-model/src/generated/dto/json-interfaces.ts"
+  bigIntType  = "string"
+  bytesType   = "ArrayObject"
+  dateType    = "string"
+  decimalType = "string"
+  exportEnums = "false"
+  modelSuffix = "Json"
+  prettier    = "true"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uid       String    @id @default(uuid()) @map("uid")
+  username  String    @unique @map("username")
+  isAdmin   Boolean   @default(false) @map("is_admin")
+  email     String    @unique
+  password  String
+  firstName String
+  lastName  String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("users")
+}
