@@ -24,6 +24,9 @@
     "prisma-push": {
       "executor": "@nx-tools/nx-prisma:push"
     },
+    "prisma-migrate": {
+      "executor": "@nx-tools/nx-prisma:migrate"
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
