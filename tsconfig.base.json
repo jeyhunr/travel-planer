@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@travel-planer/data-model": [
+        "libs/travel-planer/data-model/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
