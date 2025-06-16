@@ -27,7 +27,8 @@
           "configName": "tsconfig.lib.json",
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
-        }
+        },
+        "exclude": ["apps/nativescript-mobile/**/*"]
       }
     },
     {
@@ -38,7 +39,8 @@
         "previewTargetName": "preview",
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
-      }
+      },
+      "exclude": ["apps/nativescript-mobile/**/*"]
     },
     {
       "plugin": "@nx/eslint/plugin",

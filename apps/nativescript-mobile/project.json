@@ -71,6 +71,34 @@
       },
       "dependsOn": ["^build"]
     },
+    "android": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ns run android",
+        "cwd": "apps/nativescript-mobile"
+      }
+    },
+    "ios": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ns run ios",
+        "cwd": "apps/nativescript-mobile"
+      }
+    },
+    "build-android": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ns build android",
+        "cwd": "apps/nativescript-mobile"
+      }
+    },
+    "build-ios": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ns build ios",
+        "cwd": "apps/nativescript-mobile"
+      }
+    },
     "clean": {
       "executor": "@nativescript/nx:clean",
       "options": {}
