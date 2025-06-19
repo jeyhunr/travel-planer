@@ -7,6 +7,7 @@
     "build": "nx run-many -t build --exclude=nativescript-mobile",
     "start:android": "npx nx run nativescript-mobile:android:development",
     "start:ios": "npx nx run nativescript-mobile:ios:development",
+    "build:mobile": "npx nx run nativescript-mobile:build",
     "prisma-generate": "npx nx run prisma-client:prisma-generate",
     "prisma-pull": "npx nx run prisma-client:prisma-pull",
     "prisma-push": "npx nx run prisma-client:prisma-push",
