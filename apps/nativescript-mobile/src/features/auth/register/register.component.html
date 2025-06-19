@@ -1,0 +1,64 @@
+<ScrollView>
+  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
+    <!-- Header -->
+    <StackLayout class="mb-10 items-center">
+      <Image src="~/assets/images/coffee-cup.png" width="80" height="80" class="mb-4"></Image>
+      <Label text="Konto erstellen" class="text-3xl font-bold text-gray-800 mb-3 text-center"></Label>
+      <Label text="Beginne deine mystische Reise mit FalApp." class="text-base text-gray-600 text-center"></Label>
+    </StackLayout>
+
+    <!-- Form -->
+    <StackLayout class="space-y-6">
+      <!-- Name -->
+      <TextField
+        hint="Vollständiger Name"
+        [(ngModel)]="fullName"
+        autocorrect="false"
+        autocapitalizationType="words"
+        class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
+      ></TextField>
+
+      <!-- Email -->
+      <TextField
+        hint="E-Mail-Adresse"
+        [(ngModel)]="email"
+        keyboardType="email"
+        autocorrect="false"
+        autocapitalizationType="none"
+        class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
+      ></TextField>
+
+      <!-- Password -->
+      <GridLayout columns="*, auto" class="bg-white border border-amber-200 rounded-2xl shadow">
+        <TextField
+          col="0"
+          hint="Passwort"
+          [(ngModel)]="password"
+          [secure]="!isPasswordVisible"
+          class="px-5 py-4 text-base text-gray-800"
+        ></TextField>
+        <Button
+          col="1"
+          [text]="isPasswordVisible ? '🙈' : '👁️'"
+          (tap)="togglePasswordVisibility()"
+          class="px-4 text-gray-500"
+        ></Button>
+      </GridLayout>
+
+      <!-- Login Link -->
+      <FlexboxLayout flexDirection="row" justifyContent="center">
+        <Label text="Du hast schon ein Konto? " class="text-sm text-gray-500"></Label>
+        <Label text="Anmelden" [nsRouterLink]="'/login'" class="text-sm text-amber-600 underline font-semibold"></Label>
+      </FlexboxLayout>
+
+      <!-- Create Account Button -->
+      <Button
+        *ngIf="!isLoading"
+        text="Konto erstellen"
+        (tap)="onCreateAccount()"
+        class="bg-amber-600 text-white text-base font-bold py-4 rounded-2xl shadow-lg"
+      ></Button>
+      <ActivityIndicator [busy]="isLoading" />
+    </StackLayout>
+  </StackLayout>
+</ScrollView>

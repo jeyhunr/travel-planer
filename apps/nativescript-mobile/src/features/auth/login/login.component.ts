@@ -11,12 +11,16 @@ export class LoginComponent {
   email = '';
   password = '';
   isPasswordVisible = false;
+  isLoading = false;
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   onLogin() {
+    this.isLoading = true;
+
+    setTimeout(() => (this.isLoading = false), 2000);
     if (this.validateForm()) {
       console.log('Creating account with:', {
         email: this.email,
