@@ -23,6 +23,7 @@ Content-type: application/json
 {
   "email": "mail@rahimli.net",
   "password": "Test12345!-",
+  "repeatPassword": "Test12345!-",
   "username": "jrahimli",
   "firstName": "Jeyhun",
   "lastName": "Rahimli"
@@ -34,6 +35,6 @@ POST {{baseUrl}}/auth/login HTTP/1.1
 Content-type: application/json
 
 {
-  "username": "mail@rahimli.net",
+  "email": "mail@rahimli.net",
   "password": "Test12345!-"
 }
