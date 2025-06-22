@@ -32,8 +32,6 @@ export class AuthService {
   async login(user: User) {
     const payload = {
       email: user.email,
-      sub: user.uid,
-      iat: Math.floor(Date.now() / 1000),
     };
 
     const accessToken = this.jwtService.sign(payload, {
@@ -52,5 +50,11 @@ export class AuthService {
     const blacklistedTokens = await this.prisma.token.findFirst({ where: { token } });
 
     return !!blacklistedTokens;
+  }
+
+  async revokeToken(token: string) {
+    await this.prisma.token.deleteMany({ where: { token } });
+
+    return { message: 'Token revoked.' };
   }
 }
