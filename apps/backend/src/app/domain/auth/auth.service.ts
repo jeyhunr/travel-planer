@@ -3,13 +3,15 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../domain/users/users.service';
 import { User } from '@prisma/client';
 import { PrismaService } from '@travel-planer/prisma-client';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private prisma: PrismaService
+    private prisma: PrismaService,
+    private configService: ConfigService
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -34,17 +36,20 @@ export class AuthService {
       iat: Math.floor(Date.now() / 1000),
     };
 
+    const accessToken = this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_EXPIRES_IN'),
+    });
+
+    await this.prisma.token.create({ data: { token: accessToken, userUid: user.uid } });
+
     return {
-      access_token: this.jwtService.sign(payload),
-      user: {
-        email: user.email,
-        name: user.username,
-      },
+      access_token: accessToken,
     };
   }
 
   async isTokenBlacklisted(token: string): Promise<boolean> {
-    const blacklistedTokens = await this.prisma.token.findUnique({ where: { token } });
+    const blacklistedTokens = await this.prisma.token.findFirst({ where: { token } });
 
     return !!blacklistedTokens;
   }

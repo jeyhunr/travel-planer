@@ -38,3 +38,8 @@ Content-type: application/json
   "email": "mail@rahimli.net",
   "password": "Test12345!-"
 }
+
+###
+# @name Logout
+GET {{baseUrl}}/auth/logout HTTP/1.1
+Authorization: Bearer {{authToken}}

@@ -48,13 +48,17 @@ model User {
   updatedAt DateTime  @default(now()) @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
+  tokens Token[]
+
   @@map("users")
 }
 
 model Token {
   uid       String   @id @default(uuid()) @map("uid")
-  token     String   @unique
+  token     String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
+  User      User?    @relation(fields: [userUid], references: [uid])
+  userUid   String?
 
   @@map("tokens")
 }
