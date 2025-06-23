@@ -1,0 +1,19 @@
+<GridLayout rows="*, auto" class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
+  <ScrollView row="0">
+    <StackLayout class="space-y-8">
+      <StackLayout class="rounded-2xl bg-white shadow border border-amber-200 px-5 py-6">
+        <Label text="Hi, Jeyhun!" class="text-2xl font-bold text-gray-800 mb-1 text-center"></Label>
+        <Label text="Welcome. It is nice to see you." class="text-base text-gray-600 text-center"></Label>
+      </StackLayout>
+
+      <ns-card *ngFor="let post of myPosts" [imgSrc]="post.imgSrc" [title]="post.title" [date]="post.date"></ns-card>
+    </StackLayout>
+  </ScrollView>
+
+  <StackLayout row="1" class="mt-4">
+    <Button
+      text="＋ Create Fal"
+      class="bg-amber-600 text-white text-center text-base font-bold py-4 rounded-2xl shadow-lg"
+    ></Button>
+  </StackLayout>
+</GridLayout>
