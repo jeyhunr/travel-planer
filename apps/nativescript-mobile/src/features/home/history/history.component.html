@@ -1,0 +1,7 @@
+<ScrollView>
+  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
+    <Label text="My Coffee History" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
+
+    <ns-card *ngFor="let post of myPosts" [imgSrc]="post.imgSrc" [title]="post.title" [date]="post.date"></ns-card>
+  </StackLayout>
+</ScrollView>
