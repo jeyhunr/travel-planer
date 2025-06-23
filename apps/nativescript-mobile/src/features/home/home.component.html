@@ -1,11 +1,13 @@
-<ActionBar title="My App"> </ActionBar>
+<TabView>
+  <StackLayout *tabItem="{ title: 'Home', iconSource: 'res://Icons/home' }">
+    <ns-feed></ns-feed>
+  </StackLayout>
 
-<GridLayout>
-  <ListView [items]="itemService.items()">
-    <ng-template let-item="item">
-      <StackLayout [nsRouterLink]="'/register'">
-        <Label [text]="item.name" class="text-lg text-gray-500 p-4"></Label>
-      </StackLayout>
-    </ng-template>
-  </ListView>
-</GridLayout>
+  <StackLayout *tabItem="{ title: 'History', iconSource: 'res://Icons/game-cards-diamond' }">
+    <ns-history></ns-history>
+  </StackLayout>
+
+  <StackLayout *tabItem="{ title: 'Settings', iconSource: 'res://Icons/settings' }">
+    <ns-settings></ns-settings>
+  </StackLayout>
+</TabView>
