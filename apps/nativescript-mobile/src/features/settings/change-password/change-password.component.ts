@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { NativeScriptCommonModule, NativeScriptRouterModule, RouterExtensions } from '@nativescript/angular';
 
 @Component({
   selector: 'ns-change-password',
@@ -7,4 +7,46 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
   imports: [NativeScriptCommonModule, NativeScriptRouterModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ChangePasswordComponent {}
+export class ChangePasswordComponent {
+  currentPassword = '';
+  newPassword = '';
+  repeatPassword = '';
+  errorMessage = '';
+  showPassword = false;
+
+  constructor(private router: RouterExtensions) {}
+
+  goBack() {
+    this.router.navigate(['home'], {
+      transition: {
+        name: 'slideRight',
+      },
+    });
+  }
+
+  onChangePassword() {
+    if (this.validateForm()) {
+      if (this.newPassword !== this.repeatPassword) {
+        this.errorMessage = 'Passwords do not match.';
+        return;
+      }
+
+      console.log('Change password:', this.currentPassword, this.newPassword);
+      this.errorMessage = '';
+    }
+  }
+
+  private validateForm(): boolean {
+    if (!this.currentPassword.trim()) {
+      return false;
+    }
+    if (!this.newPassword.trim()) {
+      return false;
+    }
+    if (this.newPassword.length < 6) {
+      this.errorMessage = 'Password should be at least 6 characters long.';
+      return false;
+    }
+    return true;
+  }
+}
