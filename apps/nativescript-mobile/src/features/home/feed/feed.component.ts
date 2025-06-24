@@ -1,11 +1,12 @@
 import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { CardComponent } from '../../../components';
+import { TeaserComponent } from '../../../components/teaser/teaser.component';
 
 @Component({
   selector: 'ns-feed',
   templateUrl: './feed.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, CardComponent],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, CardComponent, TeaserComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class FeedComponent implements OnInit {
