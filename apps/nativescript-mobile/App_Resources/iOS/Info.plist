@@ -56,5 +56,13 @@
 		</dict>
 		<key>UIUserInterfaceStyle</key>
 		<string>Light</string>
+		<key>NSCameraUsageDescription</key>
+		<string>We need access to your camera to let you take a photo of your coffee cup for
+			reading.</string>
+
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>We need access to your photo library so you can select a coffee cup image for
+			reading.</string>
+
 	</dict>
 </plist>

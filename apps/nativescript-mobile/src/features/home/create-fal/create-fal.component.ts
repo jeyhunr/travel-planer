@@ -1,7 +1,8 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule } from '@nativescript/angular';
-import { ImageAsset, Utils } from '@nativescript/core';
 import { TitleComponent } from '../../../components/title/title.component';
+import * as camera from '@nativescript/camera';
+import { Image } from '@nativescript/core';
 
 @Component({
   selector: 'ns-create-fal',
@@ -14,16 +15,23 @@ export class CreateFalComponent {
   selectedLanguage = 'Deutsch';
   languages = ['Deutsch', 'Türkisch', 'Englisch'];
 
-  async pickImage() {
-    // const context = ImagePicker.create({
-    //   mode: 'single',
-    // });
-    // await context.authorize();
-    // const selection = await context.present();
-    // if (selection.length > 0) {
-    //   const selected = selection[0];
-    //   this.imageSrc = selected.android || selected.ios;
-    // }
+  async pickImage(): Promise<void> {
+    try {
+      const perms = await camera.requestPermissions();
+
+      if (!perms?.Success) {
+        console.warn('Camera permission denied.');
+        return;
+      }
+
+      const imageAsset = await camera.takePicture();
+      console.log('Image captured:', imageAsset);
+
+      const image = new Image();
+      image.src = imageAsset;
+    } catch (error) {
+      console.error('Image capture failed:', error);
+    }
   }
 
   submitFal() {
