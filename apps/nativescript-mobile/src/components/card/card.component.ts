@@ -13,4 +13,5 @@ export class CardComponent {
   description = input<string>('');
   author = input<string>('');
   date = input<string>('');
+  id = input<number>();
 }

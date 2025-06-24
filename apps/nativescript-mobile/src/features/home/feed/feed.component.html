@@ -6,8 +6,14 @@
         <Label text="Welcome. It is nice to see you." class="text-base text-gray-600 text-center"></Label>
       </StackLayout>
 
-      <StackLayout *ngFor="let post of myPosts" [nsRouterLink]="['/feed-detail', post.id]">
-        <ns-card [imgSrc]="post.imgSrc" [title]="post.title" [date]="post.date"></ns-card>
+      <StackLayout *ngFor="let post of myPosts">
+        <ns-card
+          [imgSrc]="post.imgSrc"
+          [title]="post.title"
+          [date]="post.date"
+          [id]="post.id"
+          [author]="post.author"
+        ></ns-card>
       </StackLayout>
     </StackLayout>
   </ScrollView>
