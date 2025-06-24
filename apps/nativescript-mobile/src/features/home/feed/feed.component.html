@@ -6,7 +6,7 @@
         <Label text="Welcome. It is nice to see you." class="text-base text-gray-600 text-center"></Label>
       </StackLayout>
 
-      <StackLayout *ngFor="let post of myPosts">
+      <StackLayout *ngFor="let post of myPosts" [nsRouterLink]="['/feed-detail', post.id]">
         <ns-card [imgSrc]="post.imgSrc" [title]="post.title" [date]="post.date"></ns-card>
       </StackLayout>
     </StackLayout>
@@ -16,6 +16,7 @@
     <Button
       text="＋ Create Fal"
       class="bg-amber-600 text-white text-center text-base font-bold py-4 rounded-2xl shadow-lg"
+      [nsRouterLink]="'/create-fal'"
     ></Button>
   </StackLayout>
 </GridLayout>
