@@ -1,0 +1,17 @@
+<ScrollView>
+  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
+    <ns-title title="Detail"></ns-title>
+
+    <Image [src]="post.imgSrc" class="w-full h-64 rounded-2xl shadow border border-amber-200" stretch="aspectFill" />
+
+    <Label [text]="post.text" textWrap="true" class="text-base text-gray-800"></Label>
+
+    <Label [text]="'Gelesen am: ' + post.date" class="text-sm text-gray-500"></Label>
+
+    <Button
+      [text]="post.shared ? '🔒 Nicht mehr teilen' : '🔗 Teilen'"
+      class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
+      (tap)="toggleShare()"
+    ></Button>
+  </StackLayout>
+</ScrollView>
