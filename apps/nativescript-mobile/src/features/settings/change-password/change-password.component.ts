@@ -1,10 +1,11 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule, RouterExtensions } from '@nativescript/angular';
+import { TitleComponent } from '../../../components';
 
 @Component({
   selector: 'ns-change-password',
   templateUrl: './change-password.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, TitleComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class ChangePasswordComponent {
