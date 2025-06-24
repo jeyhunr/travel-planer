@@ -1,0 +1,21 @@
+<ScrollView>
+  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
+    <ns-title title="create fal"></ns-title>
+
+    <StackLayout class="bg-white rounded-2xl shadow border border-amber-200 px-5 py-5 items-center space-y-3">
+      <Image *ngIf="imageSrc" [src]="imageSrc" class="w-64 h-64 rounded-xl" stretch="aspectFill" />
+      <Button text="📷 Foto aufnehmen oder wählen" class="text-amber-600 font-semibold" (tap)="pickImage()"></Button>
+    </StackLayout>
+
+    <StackLayout class="bg-white rounded-2xl shadow border border-amber-200 px-5 py-5 space-y-2">
+      <Label text="Sprache wählen" class="text-base font-semibold text-gray-800"></Label>
+      <Picker [items]="languages" [(ngModel)]="selectedLanguage" class="text-base text-gray-700" />
+    </StackLayout>
+
+    <Button
+      text="🕊️ Absenden"
+      class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
+      (tap)="submitFal()"
+    ></Button>
+  </StackLayout>
+</ScrollView>
