@@ -1,4 +1,4 @@
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 
 @Component({
@@ -8,9 +8,9 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class CardComponent {
-  @Input() imgSrc = '';
-  @Input() title = '';
-  @Input() description = '';
-  @Input() author = '';
-  @Input() date = '';
+  imgSrc = input<string>('');
+  title = input<string>('');
+  description = input<string>('');
+  author = input<string>('');
+  date = input<string>('');
 }

@@ -1,8 +1,8 @@
 <StackLayout class="rounded-2xl bg-white shadow border border-amber-200 px-4 py-4 space-y-3">
-  <Image [src]="imgSrc" class="w-full h-48 rounded-xl" stretch="aspectFill" />
-  <Label [text]="title" class="text-gray-800 text-base" textWrap="true"></Label>
+  <Image [src]="imgSrc()" class="w-full h-48 rounded-xl" stretch="aspectFill" />
+  <Label [text]="title()" class="text-gray-800 text-base" textWrap="true"></Label>
   <FlexboxLayout justifyContent="space-between" alignItems="center">
-    <Label [text]="date" class="text-gray-400 text-sm"></Label>
+    <Label [text]="date()" class="text-gray-400 text-sm"></Label>
     <Image src="~/assets/images/lock.png" width="20" height="20" />
   </FlexboxLayout>
 </StackLayout>
