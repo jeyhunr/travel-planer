@@ -1,0 +1,43 @@
+<ScrollView>
+  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
+    <FlexboxLayout justifyContent="space-between" alignItems="center" class="mb-6">
+      <Button text="‹" (tap)="goBack()" class="text-xl text-gray-800 px-2"></Button>
+      <Label text="Manage Subscriptions" class="text-xl font-bold text-gray-800"></Label>
+      <Label text=" " width="24"></Label>
+    </FlexboxLayout>
+
+    <StackLayout class="bg-white rounded-2xl shadow border border-amber-200 px-5 py-5 space-y-2">
+      <Label textWrap="true" class="text-base text-gray-700">
+        <FormattedString>
+          <Span text="Um ein Coupon zu kaufen, besuchen Sie die Seite "></Span>
+          <Span
+            text="rahimli.net"
+            class="text-amber-600 underline font-semibold"
+            (tap)="openUrl('https://rahimli.net')"
+          ></Span>
+          <Span text=" oder kontaktieren Sie uns via "></Span>
+          <Span
+            text="mail@rahimli.net"
+            class="text-amber-600 underline font-semibold"
+            (tap)="openUrl('mailto:mail@rahimli.net')"
+          ></Span>
+          <Span text="."></Span>
+        </FormattedString>
+      </Label>
+    </StackLayout>
+
+    <GridLayout columns="*, auto" class="bg-white rounded-2xl shadow border border-amber-200">
+      <TextField col="0" hint="Coupon eingeben" [(ngModel)]="newCoupon" class="px-5 py-4 text-base text-gray-800" />
+      <Button col="1" text="Einlösen" class="text-amber-600 font-bold px-4" (tap)="addCoupon()"></Button>
+    </GridLayout>
+
+    <StackLayout class="space-y-3">
+      <Label text="Deine Coupons" class="text-base font-semibold text-gray-800"></Label>
+
+      <StackLayout *ngFor="let coupon of coupons" class="bg-white rounded-2xl shadow border border-amber-200 px-4 py-3">
+        <Label [text]="'Code: ' + coupon.code" class="text-gray-800 text-base"></Label>
+        <Label [text]="'Status: ' + coupon.status" class="text-gray-500 text-sm"></Label>
+      </StackLayout>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>
