@@ -34,7 +34,5 @@ export class CreateFalComponent {
 
     console.log('Neuer Fal wird eingereicht mit Sprache:', this.selectedLanguage);
     console.log('Bild:', this.imageSrc);
-
-    // TODO: Hier API-Aufruf oder Navigation zu Bestätigungsseite
   }
 }

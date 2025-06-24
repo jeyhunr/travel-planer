@@ -1,21 +1,58 @@
 <ScrollView>
-  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
-    <ns-title title="create fal"></ns-title>
-
-    <StackLayout class="bg-white rounded-2xl shadow border border-amber-200 px-5 py-5 items-center space-y-3">
-      <Image *ngIf="imageSrc" [src]="imageSrc" class="w-64 h-64 rounded-xl" stretch="aspectFill" />
-      <Button text="📷 Foto aufnehmen oder wählen" class="text-amber-600 font-semibold" (tap)="pickImage()"></Button>
+  <StackLayout class="bg-amber-50 min-h-full px-6 py-8 space-y-8">
+    <StackLayout class="text-center mb-4">
+      <ns-title title="Create FAL"></ns-title>
+      <Label text="Erstelle deinen neuen Beitrag" class="text-gray-600 text-base mt-2"></Label>
     </StackLayout>
 
-    <StackLayout class="bg-white rounded-2xl shadow border border-amber-200 px-5 py-5 space-y-2">
-      <Label text="Sprache wählen" class="text-base font-semibold text-gray-800"></Label>
-      <Picker [items]="languages" [(ngModel)]="selectedLanguage" class="text-base text-gray-700" />
+    <StackLayout class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-8 items-center space-y-4">
+      <StackLayout *ngIf="!imageSrc" class="items-center space-y-3">
+        <Label text="Foto hinzufügen" class="text-xl font-bold text-gray-800 text-center"></Label>
+        <Label
+          text="Wähle ein Bild aus oder nimm ein neues auf"
+          class="text-gray-500 text-center"
+          textWrap="true"
+        ></Label>
+        <Button
+          text="📷 Foto auswählen"
+          class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-2xl mt-3"
+          (tap)="pickImage()"
+        ></Button>
+      </StackLayout>
+
+      <StackLayout *ngIf="imageSrc" class="items-center space-y-4">
+        <Image [src]="imageSrc" class="w-72 h-72 rounded-2xl border-2 border-amber-200" stretch="aspectFill" />
+        <Button text="🔄 Anderes Foto wählen" class="text-amber-600 font-medium underline" (tap)="pickImage()"></Button>
+      </StackLayout>
     </StackLayout>
 
-    <Button
-      text="🕊️ Absenden"
-      class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
-      (tap)="submitFal()"
-    ></Button>
+    <StackLayout class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-6 space-y-4">
+      <StackLayout class="items-center space-y-2">
+        <Label text="Sprache auswählen" class="text-xl font-bold text-gray-800 text-center"></Label>
+        <Label
+          text="In welcher Sprache soll der Text erkannt werden?"
+          class="text-gray-500 text-center"
+          textWrap="true"
+        ></Label>
+      </StackLayout>
+
+      <StackLayout class="bg-amber-50 rounded-2xl px-4 py-3 mt-4">
+        <ListPicker [items]="languages" />
+      </StackLayout>
+    </StackLayout>
+
+    <StackLayout class="mt-8">
+      <Button
+        text="🚀 Absenden"
+        class="bg-amber-600 text-white font-bold py-5 rounded-3xl shadow-xl"
+        (tap)="submitFal()"
+      ></Button>
+
+      <Label
+        text="Dein Bild wird analysiert und der Text extrahiert"
+        class="text-gray-500 text-sm text-center mt-3"
+        textWrap="true"
+      ></Label>
+    </StackLayout>
   </StackLayout>
 </ScrollView>
