@@ -2,11 +2,18 @@ import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { CardComponent } from '../../../components';
 import { TeaserComponent } from '../../../components/teaser/teaser.component';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 
 @Component({
   selector: 'ns-feed',
   templateUrl: './feed.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, CardComponent, TeaserComponent],
+  imports: [
+    NativeScriptCommonModule,
+    NativeScriptRouterModule,
+    NativeScriptLocalizeModule,
+    CardComponent,
+    TeaserComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class FeedComponent implements OnInit {

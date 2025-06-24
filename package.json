@@ -26,6 +26,7 @@
     "@nativescript/angular": "^19.0.1",
     "@nativescript/camera": "^7.0.0",
     "@nativescript/core": "~8.9.0",
+    "@nativescript/localize": "^5.2.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^10.0.2",

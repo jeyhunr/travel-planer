@@ -1,0 +1,9 @@
+{
+  "app.name": "Fal APP!",
+
+  "features": {
+    "feed": {
+      "createFal": "Create new fal"
+    }
+  }
+}
