@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptRouterModule, RouterExtensions } from '@nativescript/angular';
+import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { TitleComponent } from '../../../components';
 
 @Component({
@@ -14,16 +14,6 @@ export class ChangePasswordComponent {
   repeatPassword = '';
   errorMessage = '';
   showPassword = false;
-
-  constructor(private router: RouterExtensions) {}
-
-  goBack() {
-    this.router.navigate(['home'], {
-      transition: {
-        name: 'slideRight',
-      },
-    });
-  }
 
   onChangePassword() {
     if (this.validateForm()) {

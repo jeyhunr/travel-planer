@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptRouterModule, RouterExtensions } from '@nativescript/angular';
+import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { Utils } from '@nativescript/core';
 import { TitleComponent } from '../../../components';
 
@@ -16,7 +16,6 @@ export class ManageScubscripriosnComponent {
     { code: 'SUMMER25', status: 'Verwendet' },
   ];
 
-  constructor(private router: RouterExtensions) {}
   addCoupon() {
     if (this.newCoupon.trim() === '') return;
 
@@ -26,14 +25,6 @@ export class ManageScubscripriosnComponent {
     });
 
     this.newCoupon = '';
-  }
-
-  goBack() {
-    this.router.navigate(['home'], {
-      transition: {
-        name: 'slideRight',
-      },
-    });
   }
 
   openUrl(url: string) {

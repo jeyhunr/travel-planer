@@ -2,11 +2,12 @@ import { Component, NO_ERRORS_SCHEMA, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NativeScriptCommonModule } from '@nativescript/angular';
 import { Utils } from '@nativescript/core';
+import { TitleComponent } from '../../../components';
 
 @Component({
   selector: 'ns-feed-detail',
   templateUrl: './feed-detail.component.html',
-  imports: [NativeScriptCommonModule],
+  imports: [NativeScriptCommonModule, TitleComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class FeedDetailComponent implements OnInit {
