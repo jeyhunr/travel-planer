@@ -11,4 +11,9 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     console.log('FeedComponent initialized');
   }
+
+  logout() {
+    // Implement logout logic here
+    console.log('Logged out');
+  }
 }
