@@ -1,4 +1,10 @@
 "_features_feed_createFal_Z2pRv7s" = "Create new fal";
+"_features_settings_changePasswords_requiredFields_Z2jc2QV" = "Please fill in all required fields.";
+"_features_settings_changePasswords_save_IH14t" = "Save New Password";
+"_features_settings_changePasswords_repeat_2upkag" = "Repeat New Password";
+"_features_settings_changePasswords_new_vs7uw" = "New Password";
+"_features_settings_changePasswords_current_1deULu" = "Current Password";
+"_features_settings_changePasswords_title_2n94Np" = "Password Change";
 "_features_settings_chevron_myCF6" = "›";
 "_features_settings_version_Z5GcyR" = "App version 1.0.0";
 "_features_settings_logout_Z19febe" = "Log out";

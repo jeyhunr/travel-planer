@@ -45,7 +45,15 @@
       "manageSubscriptions": "Manage Subscriptions",
       "logout": "Log out",
       "version": "App version 1.0.0",
-      "chevron": "›"
+      "chevron": "›",
+      "changePasswords": {
+        "title": "Password Change",
+        "current": "Current Password",
+        "new": "New Password",
+        "repeat": "Repeat New Password",
+        "save": "Save New Password",
+        "requiredFields": "Please fill in all required fields."
+      }
     },
     "feed": {
       "createFal": "Create new fal"

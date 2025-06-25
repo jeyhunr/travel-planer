@@ -1,43 +1,64 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { Component, inject, NO_ERRORS_SCHEMA, signal } from '@angular/core';
+import { NativeScriptCommonModule, NativeScriptFormsModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { TitleComponent } from '../../../components';
-
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'ns-change-password',
   templateUrl: './change-password.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, TitleComponent],
+  imports: [
+    NativeScriptCommonModule,
+    NativeScriptRouterModule,
+    TitleComponent,
+    NativeScriptLocalizeModule,
+    NativeScriptFormsModule,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class ChangePasswordComponent {
+  userService = inject(UserService);
   currentPassword = '';
   newPassword = '';
   repeatPassword = '';
-  errorMessage = '';
+
   showPassword = false;
+  errorMessage = signal('');
+  successMessage = signal('');
+  isLoading = signal(false);
+  showRequiredFields = signal(false);
 
   onChangePassword() {
-    if (this.validateForm()) {
-      if (this.newPassword !== this.repeatPassword) {
-        this.errorMessage = 'Passwords do not match.';
-        return;
-      }
-
-      console.log('Change password:', this.currentPassword, this.newPassword);
-      this.errorMessage = '';
+    if (!this.validateForm()) {
+      this.showRequiredFields.set(true);
+      return;
     }
+
+    this.isLoading.set(true);
+    this.showRequiredFields.set(false);
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
+    this.userService
+      .updatePassword({
+        currentPassword: this.currentPassword,
+        password: this.newPassword,
+        repeatPassword: this.repeatPassword,
+      })
+      .subscribe({
+        next: (x: { message: string }) => {
+          this.isLoading.set(false);
+          this.successMessage.set(x.message);
+        },
+        error: (error) => {
+          this.isLoading.set(false);
+          this.errorMessage.set(error.error.message.message);
+        },
+      });
   }
 
   private validateForm(): boolean {
-    if (!this.currentPassword.trim()) {
-      return false;
-    }
-    if (!this.newPassword.trim()) {
-      return false;
-    }
-    if (this.newPassword.length < 6) {
-      this.errorMessage = 'Password should be at least 6 characters long.';
-      return false;
-    }
-    return true;
+    return (
+      this.currentPassword.trim() !== '' && this.newPassword.length >= 6 && this.newPassword === this.repeatPassword
+    );
   }
 }
