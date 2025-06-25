@@ -1,10 +1,18 @@
-import { PrismaService } from '@travel-planer/prisma-client';
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ChangePasswordDto, PrismaService } from '@travel-planer/prisma-client';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from '@travel-planer/prisma-client';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { User } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +20,8 @@ export class UsersService {
 
   constructor(
     private prisma: PrismaService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private jwtService: JwtService
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -46,5 +55,52 @@ export class UsersService {
 
   async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
     return await bcrypt.compare(password, hashedPassword);
+  }
+
+  async changePassword(changePasswordDto: ChangePasswordDto, token: string) {
+    try {
+      const { currentPassword, password, repeatPassword } = changePasswordDto;
+      const decoded = this.jwtService.decode(token.split(' ')[1]);
+      const email = decoded.email;
+
+      if (password !== repeatPassword) {
+        throw new BadRequestException('Passwords do not match');
+      }
+
+      const user = await this.prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password);
+      if (!isCurrentPasswordValid) {
+        throw new UnauthorizedException('Current password is incorrect');
+      }
+
+      const hashedPassword = await bcrypt.hash(password, this.saltOrRounds);
+
+      await this.prisma.user.update({
+        where: { uid: user.uid },
+        data: {
+          password: hashedPassword,
+          updatedAt: new Date(),
+        },
+      });
+
+      return { message: 'Password changed successfully' };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException('Error changing password');
+    }
   }
 }
