@@ -103,4 +103,23 @@ export class UsersService {
       throw new InternalServerErrorException('Error changing password');
     }
   }
+
+  async getMe(token: string): Promise<Partial<User> | null> {
+    try {
+      const decoded = this.jwtService.decode(token.split(' ')[1]);
+      const email = decoded.email;
+
+      return this.prisma.user.findUnique({
+        where: { email },
+        select: {
+          email: true,
+          firstName: true,
+          lastName: true,
+          username: true,
+        },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('Error getting user');
+    }
+  }
 }

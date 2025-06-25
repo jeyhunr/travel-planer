@@ -55,3 +55,8 @@ Authorization: Bearer {{authToken}}
   "password": "Test1234!-",
   "repeatPassword": "Test1234!-"
 }
+
+###
+# @name GetMe
+GET {{baseUrl}}/users/me HTTP/1.1
+Authorization: Bearer {{authToken}}

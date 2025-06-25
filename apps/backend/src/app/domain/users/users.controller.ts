@@ -1,5 +1,5 @@
 import { ChangePasswordDto, CreateUserDto } from '@travel-planer/prisma-client';
-import { Body, Controller, Post, Put, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../../common/guard';
 
@@ -20,5 +20,11 @@ export class UsersController {
     return user.password === user.repeatPassword
       ? await this.usersService.changePassword(user, headers.authorization)
       : new UnauthorizedException('Passwords do not match! Please try again.');
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getMe(@Req() { headers }) {
+    return await this.usersService.getMe(headers.authorization);
   }
 }
