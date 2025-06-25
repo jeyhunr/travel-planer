@@ -13,6 +13,16 @@
         "noAccount": "No account yet?",
         "registerNow": "Register now",
         "requiredFields": "Email and password are required."
+      },
+      "forgotPassword": {
+        "title": "Forgot Password?",
+        "subtitle": "Enter your email to reset your password.",
+        "emailHint": "Email address",
+        "backTo": "Back to ",
+        "login": "Login",
+        "button": "Reset",
+        "requiredFields": "Email is required.",
+        "thisFeatureIsComingSoon": "This feature is coming soon!"
       }
     },
     "settings": {

@@ -1,25 +1,25 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptFormsModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 
 @Component({
   selector: 'ns-forgot-password',
   templateUrl: './forgot-password.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class ForgotPasswordComponent {
   email = '';
-  isLoading = false;
+  isLoading = signal(false);
+  showRequiredFields = signal(false);
+  errorMessage = signal('');
 
   onForgotPassword() {
-    this.isLoading = true;
-
-    setTimeout(() => (this.isLoading = false), 2000);
-    // Implement password reset logic here
     if (!this.email.trim()) {
-      alert('Bitte gib deine E-Mail-Adresse ein');
+      this.showRequiredFields.set(true);
       return;
     }
-    alert('Password reset email sent successfully');
+
+    // @TODO: Send password reset email to the provided email address
   }
 }

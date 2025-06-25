@@ -5,6 +5,14 @@
 "_features_settings_manageSubscriptions_Z1bNoeu" = "Manage Subscriptions";
 "_features_settings_changePassword_Z2wX64M" = "Change Password";
 "_features_settings_title_Z2tPhR2" = "Settings";
+"_features_auth_forgotPassword_thisFeatureIsComingSoon_Z19oe8V" = "This feature is coming soon!";
+"_features_auth_forgotPassword_requiredFields_Z1wedod" = "Email is required.";
+"_features_auth_forgotPassword_button_1cr1Jb" = "Reset";
+"_features_auth_forgotPassword_login_d1JQP" = "Login";
+"_features_auth_forgotPassword_backTo_1b4nfv" = "Back to ";
+"_features_auth_forgotPassword_emailHint_ZMY2yM" = "Email address";
+"_features_auth_forgotPassword_subtitle_1xOga9" = "Enter your email to reset your password.";
+"_features_auth_forgotPassword_title_dxyJg" = "Forgot Password?";
 "_features_auth_login_requiredFields_1tWeKy" = "Email and password are required.";
 "_features_auth_login_registerNow_Z1OyYff" = "Register now";
 "_features_auth_login_noAccount_2kGvT0" = "No account yet?";
