@@ -55,8 +55,11 @@
         "requiredFields": "Please fill in all required fields."
       }
     },
-    "feed": {
-      "createFal": "Create new fal"
+    "home": {
+      "feed": {
+        "createFal": "Create new fal",
+        "welcome": " Welcome. It is nice to see you."
+      }
     }
   }
 }

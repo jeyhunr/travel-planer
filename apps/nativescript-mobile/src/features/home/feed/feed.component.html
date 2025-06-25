@@ -1,7 +1,7 @@
 <GridLayout rows="*, auto" class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
   <ScrollView row="0" scrollBarIndicatorVisible="false">
     <StackLayout class="space-y-8">
-      <ns-teaser greeting="Hi, Jeyhun!" welcomeMessage="Welcome. It is nice to see you." emoji="🎉"> </ns-teaser>
+      <ns-teaser [greeting]="greeting()" [welcomeMessage]="'features.home.feed.welcome' | L" emoji="🎉"> </ns-teaser>
       <StackLayout *ngFor="let post of myPosts">
         <ns-card
           [imgSrc]="post.imgSrc"
@@ -16,7 +16,7 @@
 
   <StackLayout row="1" class="mt-4">
     <Button
-      [text]="'features.feed.createFal' | L"
+      [text]="'features.home.feed.createFal' | L"
       class="bg-amber-600 text-white text-center text-base font-bold py-4 rounded-2xl shadow-lg"
       [nsRouterLink]="'/create-fal'"
     ></Button>

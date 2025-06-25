@@ -12,7 +12,7 @@ import { RouterExtensions } from '@nativescript/angular';
 })
 export class AuthService {
   private _isAuthenticated = signal<boolean>(false);
-  private _user = signal<User | null>(null);
+  private _user = signal<Partial<User> | null>(null);
   private _token = signal<string | null>(null);
   private router = inject(RouterExtensions);
   private http = inject(HttpClient);
@@ -57,7 +57,7 @@ export class AuthService {
     this.storeToken(token);
     this._token.set(token);
     this._isAuthenticated.set(true);
-    // this.loadUserProfile();
+    this.loadUserProfile();
   }
 
   private clearAuthData(): void {
@@ -71,7 +71,7 @@ export class AuthService {
     if (!this._token()) return;
 
     this.http
-      .get<User>(`${environment.API_URL}/user/profile`)
+      .get(`${environment.API_URL}/users/me`)
       .pipe(
         catchError((error) => {
           this.logout();
@@ -102,7 +102,7 @@ export class AuthService {
       this._token.set(token);
       this._isAuthenticated.set(true);
 
-      //   this.loadUserProfile();
+      this.loadUserProfile();
     }
   }
 }

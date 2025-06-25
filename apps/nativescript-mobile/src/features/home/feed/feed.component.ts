@@ -1,9 +1,9 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, computed, inject, NO_ERRORS_SCHEMA, OnInit, signal } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { CardComponent } from '../../../components';
 import { TeaserComponent } from '../../../components/teaser/teaser.component';
 import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
-
+import { AuthService } from '../../../core/services/auth.service';
 @Component({
   selector: 'ns-feed',
   templateUrl: './feed.component.html',
@@ -16,10 +16,13 @@ import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class FeedComponent implements OnInit {
-  ngOnInit(): void {
-    console.log('FeedComponent initialized');
-  }
+export class FeedComponent {
+  authService = inject(AuthService);
+
+  greeting = computed(() => {
+    const user = this.authService.user();
+    return user?.username || 'Guest';
+  });
 
   myPosts = [
     {
