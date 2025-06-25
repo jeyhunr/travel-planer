@@ -31,7 +31,7 @@ export class UsersService {
       return { message: `User ${user.email} created successfully.` };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002') {
-        throw new ConflictException('email already exists');
+        throw new ConflictException('Email or username is already exists');
       }
 
       throw new InternalServerErrorException('error creating user');

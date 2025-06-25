@@ -1,4 +1,4 @@
-import { LoginDto } from '@travel-planer/prisma-client';
+import { CreateUserDto, LoginDto } from '@travel-planer/prisma-client';
 import { User } from '@prisma/client';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -27,6 +27,12 @@ export class AuthService {
 
   constructor() {
     this.initializeAuth();
+  }
+
+  register(credentials: CreateUserDto) {
+    return this.http
+      .post(`${environment.API_URL}/users`, credentials)
+      .pipe(catchError((error) => throwError(() => error)));
   }
 
   login(credentials: LoginDto): Observable<{ access_token: string }> {

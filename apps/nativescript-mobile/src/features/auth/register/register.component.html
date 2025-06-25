@@ -1,26 +1,41 @@
 <ScrollView>
   <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
-    <!-- Header -->
     <StackLayout class="mb-10 items-center">
       <Image src="~/assets/images/coffee-cup.png" width="80" height="80" class="mb-4"></Image>
-      <Label text="Konto erstellen" class="text-3xl font-bold text-gray-800 mb-3 text-center"></Label>
-      <Label text="Beginne deine mystische Reise mit FalApp." class="text-base text-gray-600 text-center"></Label>
+      <Label
+        [text]="'features.auth.register.title' | L"
+        class="text-3xl font-bold text-gray-800 mb-3 text-center"
+      ></Label>
+      <Label [text]="'features.auth.register.subtitle' | L" class="text-base text-gray-600 text-center"></Label>
     </StackLayout>
 
-    <!-- Form -->
     <StackLayout class="space-y-6">
-      <!-- Name -->
       <TextField
-        hint="Vollständiger Name"
-        [(ngModel)]="fullName"
+        [hint]="'features.auth.register.firstNameHint' | L"
+        [(ngModel)]="firstName"
         autocorrect="false"
         autocapitalizationType="words"
         class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
       ></TextField>
 
-      <!-- Email -->
       <TextField
-        hint="E-Mail-Adresse"
+        [hint]="'features.auth.register.lastNameHint' | L"
+        [(ngModel)]="lastName"
+        autocorrect="false"
+        autocapitalizationType="words"
+        class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
+      ></TextField>
+
+      <TextField
+        [hint]="'features.auth.register.usernameHint' | L"
+        [(ngModel)]="username"
+        autocorrect="false"
+        autocapitalizationType="words"
+        class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
+      ></TextField>
+
+      <TextField
+        [hint]="'features.auth.register.emailHint' | L"
         [(ngModel)]="email"
         keyboardType="email"
         autocorrect="false"
@@ -28,12 +43,20 @@
         class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
       ></TextField>
 
-      <!-- Password -->
+      <TextField
+        [hint]="'features.auth.register.passwordHint' | L"
+        [(ngModel)]="password"
+        [secure]="true"
+        autocorrect="false"
+        autocapitalizationType="none"
+        class="bg-white border border-amber-200 rounded-2xl px-5 py-4 text-base text-gray-800 shadow"
+      ></TextField>
+
       <GridLayout columns="*, auto" class="bg-white border border-amber-200 rounded-2xl shadow">
         <TextField
           col="0"
-          hint="Passwort"
-          [(ngModel)]="password"
+          [hint]="'features.auth.register.repeatPasswordHint' | L"
+          [(ngModel)]="repeadPassword"
           [secure]="!isPasswordVisible"
           class="px-5 py-4 text-base text-gray-800"
         ></TextField>
@@ -45,20 +68,29 @@
         ></Button>
       </GridLayout>
 
-      <!-- Login Link -->
       <FlexboxLayout flexDirection="row" justifyContent="center">
-        <Label text="Du hast schon ein Konto? " class="text-sm text-gray-500"></Label>
-        <Label text="Anmelden" [nsRouterLink]="'/login'" class="text-sm text-amber-600 underline font-semibold"></Label>
+        <Label [text]="'features.auth.register.alreadyHaveAccount' | L" class="text-sm text-gray-500"></Label>
+        <Label
+          [text]="'features.auth.register.login' | L"
+          [nsRouterLink]="'/login'"
+          class="text-sm text-amber-600 underline font-semibold"
+        ></Label>
       </FlexboxLayout>
 
-      <!-- Create Account Button -->
       <Button
-        *ngIf="!isLoading"
-        text="Konto erstellen"
+        *ngIf="!isLoading()"
+        [text]="'features.auth.register.createAccount' | L"
         (tap)="onCreateAccount()"
         class="bg-amber-600 text-white text-base font-bold py-4 rounded-2xl shadow-lg"
       ></Button>
-      <ActivityIndicator [busy]="isLoading" />
+      <ActivityIndicator [busy]="isLoading()" />
+
+      <Label
+        *ngIf="showRequiredFields()"
+        [text]="'features.auth.register.requiredFields' | L"
+        class="text-sm text-red-500 text-center"
+      ></Label>
+      <Label *ngIf="errorMessage()" [text]="errorMessage()" class="text-sm text-red-500 text-center"></Label>
     </StackLayout>
   </StackLayout>
 </ScrollView>

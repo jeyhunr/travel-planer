@@ -1,53 +1,78 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptFormsModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { Component, inject, NO_ERRORS_SCHEMA, signal } from '@angular/core';
+import {
+  NativeScriptCommonModule,
+  NativeScriptFormsModule,
+  NativeScriptRouterModule,
+  RouterExtensions,
+} from '@nativescript/angular';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'ns-register',
   templateUrl: './register.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class RegisterComponent {
-  fullName = '';
+  authService = inject(AuthService);
+  router = inject(RouterExtensions);
   email = '';
+  username = '';
+  firstName = '';
+  lastName = '';
   password = '';
+  repeadPassword = '';
   isPasswordVisible = false;
-  isLoading = false;
+
+  errorMessage = signal('');
+  isLoading = signal(false);
+  showRequiredFields = signal(false);
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   onCreateAccount() {
-    this.isLoading = true;
-
-    setTimeout(() => (this.isLoading = false), 2000);
-    if (this.validateForm()) {
-      console.log('Creating account with:', {
-        fullName: this.fullName,
-        email: this.email,
-        password: this.password,
-      });
+    if (!this.validateForm()) {
+      this.showRequiredFields.set(true);
+      return;
     }
+
+    this.isLoading.set(true);
+    this.showRequiredFields.set(false);
+    this.errorMessage.set('');
+
+    this.authService
+      .register({
+        email: this.email,
+        username: this.username,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        password: this.password,
+        repeatPassword: this.repeadPassword,
+      })
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.error(error);
+          this.isLoading.set(false);
+          this.errorMessage.set(error.error.message.message);
+        },
+      });
   }
 
   private validateForm(): boolean {
-    if (!this.fullName.trim()) {
-      alert('Bitte gib deinen vollständigen Namen ein');
-      return false;
-    }
-    if (!this.email.trim()) {
-      alert('Bitte gib deine E-Mail-Adresse ein');
-      return false;
-    }
-    if (!this.password.trim()) {
-      alert('Bitte gib ein Passwort ein');
-      return false;
-    }
-    if (this.password.length < 6) {
-      alert('Das Passwort muss mindestens 6 Zeichen lang sein');
-      return false;
-    }
-    return true;
+    return (
+      this.firstName.trim() !== '' &&
+      this.lastName.trim() !== '' &&
+      this.email.trim() !== '' &&
+      this.password.trim() !== '' &&
+      this.password.length >= 6 &&
+      this.password === this.repeadPassword
+    );
   }
 }

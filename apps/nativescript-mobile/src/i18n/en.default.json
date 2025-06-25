@@ -17,12 +17,26 @@
       "forgotPassword": {
         "title": "Forgot Password?",
         "subtitle": "Enter your email to reset your password.",
-        "emailHint": "Email address",
+        "emailHint": "Email address *",
         "backTo": "Back to ",
         "login": "Login",
         "button": "Reset",
         "requiredFields": "Email is required.",
         "thisFeatureIsComingSoon": "This feature is coming soon!"
+      },
+      "register": {
+        "title": "Create Account",
+        "subtitle": "Start your mystical journey with FalApp.",
+        "firstNameHint": "First name *",
+        "lastNameHint": "Last name *",
+        "usernameHint": "Username *",
+        "emailHint": "Email address *",
+        "passwordHint": "Password *",
+        "repeatPasswordHint": "Repeat password *",
+        "alreadyHaveAccount": "Already have an account?",
+        "login": "Log in",
+        "createAccount": "Create Account",
+        "requiredFields": "Please fill in all required fields."
       }
     },
     "settings": {

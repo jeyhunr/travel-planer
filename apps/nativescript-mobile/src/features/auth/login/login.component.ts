@@ -52,12 +52,6 @@ export class LoginComponent {
   }
 
   private validateForm(): boolean {
-    if (!this.email.trim()) {
-      return false;
-    }
-    if (!this.password.trim()) {
-      return false;
-    }
-    return true;
+    return this.email.trim() !== '' && this.password.trim() !== '';
   }
 }
