@@ -1,17 +1,17 @@
 <ScrollView>
   <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
-    <!-- Header -->
     <StackLayout class="mb-10 items-center">
       <Image src="~/assets/images/coffee-cup.png" width="80" height="80" class="mb-4"></Image>
-      <Label text="Willkommen zurück ☕" class="text-3xl font-bold text-gray-800 mb-3 text-center"></Label>
-      <Label text="Melde dich an, um in die Zukunft zu blicken." class="text-base text-gray-600 text-center"></Label>
+      <Label
+        [text]="'features.auth.login.welcome' | L"
+        class="text-3xl font-bold text-gray-800 mb-3 text-center"
+      ></Label>
+      <Label [text]="'features.auth.login.subtitle' | L" class="text-base text-gray-600 text-center"></Label>
     </StackLayout>
 
-    <!-- Form -->
     <StackLayout class="space-y-6">
-      <!-- Email -->
       <TextField
-        hint="Email"
+        [hint]="'features.auth.login.emailHint' | L"
         [(ngModel)]="email"
         keyboardType="email"
         class="bg-white rounded-2xl px-5 py-4 text-base text-gray-800 shadow border border-amber-200"
@@ -19,11 +19,10 @@
         autocapitalizationType="none"
       ></TextField>
 
-      <!-- Password -->
       <GridLayout columns="*, auto" class="bg-white rounded-2xl shadow border border-amber-200">
         <TextField
           col="0"
-          hint="Passwort"
+          [hint]="'features.auth.login.passwordHint' | L"
           [(ngModel)]="password"
           [secure]="!isPasswordVisible"
           class="px-5 py-4 text-base text-gray-800"
@@ -36,31 +35,35 @@
         ></Button>
       </GridLayout>
 
-      <!-- Forgot password -->
       <Label
-        text="Passwort vergessen?"
+        [text]="'features.auth.login.forgotPassword' | L"
         [nsRouterLink]="'/forgot-password'"
         class="text-sm text-right text-gray-500 underline"
       ></Label>
 
-      <!-- Login Button -->
       <Button
-        text="Einloggen"
+        [text]="'features.auth.login.button' | L"
         (tap)="onLogin()"
         class="bg-amber-600 text-white text-base font-bold py-4 rounded-2xl shadow-lg"
-        *ngIf="!isLoading"
+        *ngIf="!isLoading()"
       ></Button>
-      <ActivityIndicator [busy]="isLoading" />
+      <ActivityIndicator [busy]="isLoading()" />
 
-      <!-- Register -->
       <FlexboxLayout flexDirection="row" justifyContent="center">
-        <Label text="Noch kein Konto? " class="text-sm text-gray-500"></Label>
+        <Label [text]="'features.auth.login.noAccount' | L" class="text-sm text-gray-500"></Label>
         <Label
-          text="Jetzt registrieren"
+          [text]="'features.auth.login.registerNow' | L"
           [nsRouterLink]="'/register'"
           class="text-sm text-amber-600 underline font-semibold"
         ></Label>
       </FlexboxLayout>
+
+      <Label
+        *ngIf="showRequiredFields()"
+        [text]="'features.auth.login.requiredFields' | L"
+        class="text-sm text-red-500 text-center"
+      ></Label>
+      <Label *ngIf="errorMessage()" [text]="errorMessage()" class="text-sm text-red-500 text-center"></Label>
     </StackLayout>
   </StackLayout>
 </ScrollView>

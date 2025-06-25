@@ -1,45 +1,62 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptFormsModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { Component, NO_ERRORS_SCHEMA, signal, inject } from '@angular/core';
+import {
+  NativeScriptCommonModule,
+  NativeScriptFormsModule,
+  NativeScriptRouterModule,
+  RouterExtensions,
+} from '@nativescript/angular';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'ns-login',
   templateUrl: './login.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptFormsModule, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class LoginComponent {
+  authService = inject(AuthService);
+  router = inject(RouterExtensions);
   email = '';
   password = '';
   isPasswordVisible = false;
-  isLoading = false;
+
+  errorMessage = signal('');
+  isLoading = signal(false);
+  showRequiredFields = signal(false);
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   onLogin() {
-    this.isLoading = true;
-
-    setTimeout(() => (this.isLoading = false), 2000);
-    if (this.validateForm()) {
-      console.log('Creating account with:', {
-        email: this.email,
-        password: this.password,
-      });
+    if (!this.validateForm()) {
+      this.showRequiredFields.set(true);
+      return;
     }
+
+    this.isLoading.set(true);
+    this.showRequiredFields.set(false);
+    this.errorMessage.set('');
+
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        this.isLoading.set(false);
+        this.errorMessage.set(error.error.message.message);
+        console.error('Login error:', error);
+      },
+    });
   }
 
   private validateForm(): boolean {
     if (!this.email.trim()) {
-      alert('Bitte gib deine E-Mail-Adresse ein');
       return false;
     }
     if (!this.password.trim()) {
-      alert('Bitte gib dein Passwort ein');
-      return false;
-    }
-    if (this.password.length < 6) {
-      alert('Das Passwort muss mindestens 6 Zeichen lang sein');
       return false;
     }
     return true;

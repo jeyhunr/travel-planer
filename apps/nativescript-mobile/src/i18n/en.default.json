@@ -2,6 +2,20 @@
   "app.name": "Fal APP!",
 
   "features": {
+    "auth": {
+      "login": {
+        "welcome": "Welcome back ☕",
+        "subtitle": "Sign in to see your future.",
+        "emailHint": "Email *",
+        "passwordHint": "Password *",
+        "forgotPassword": "Forgot password?",
+        "button": "Log in",
+        "noAccount": "No account yet?",
+        "registerNow": "Register now",
+        "requiredFields": "Email and password are required."
+      },
+      "logout": "Logout"
+    },
     "feed": {
       "createFal": "Create new fal"
     }
