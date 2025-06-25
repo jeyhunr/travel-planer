@@ -1,35 +1,35 @@
 <ScrollView>
   <StackLayout class="min-h-full px-6 py-10 space-y-6">
-    <Label text="Settings" class="text-xl font-bold text-center text-gray-800 mb-4"></Label>
+    <Label [text]="'features.settings.title' | L" class="text-xl font-bold text-center text-gray-800 mb-4"></Label>
 
     <GridLayout columns="auto, *, auto" class="bg-gray-100 rounded-2xl px-4 py-4 items-center">
       <Image src="~/assets/images/lock.png" width="24" height="24" />
       <Label
-        text="Change Password"
+        [text]="'features.settings.changePassword' | L"
         col="1"
         class="ml-4 text-base text-gray-800 font-medium"
         [nsRouterLink]="'/change-password'"
       ></Label>
-      <Label text="›" col="2" class="text-gray-400 text-xl"></Label>
+      <Label [text]="'features.settings.chevron' | L" col="2" class="text-gray-400 text-xl"></Label>
     </GridLayout>
 
     <GridLayout columns="auto, *, auto" class="bg-gray-100 rounded-2xl px-4 py-4 items-center">
       <Image src="~/assets/images/star-review.png" width="24" height="24" />
       <Label
-        text="Manage Subscriptions"
+        [text]="'features.settings.manageSubscriptions' | L"
         col="1"
         class="ml-4 text-base text-gray-800 font-medium"
         [nsRouterLink]="'/manage-subscriptions'"
       ></Label>
-      <Label text="›" col="2" class="text-gray-400 text-xl"></Label>
+      <Label [text]="'features.settings.chevron' | L" col="2" class="text-gray-400 text-xl"></Label>
     </GridLayout>
 
     <Button
-      text="Log out"
+      [text]="'features.settings.logout' | L"
       (tap)="logout()"
       class="bg-red-500 text-white font-bold py-4 rounded-2xl shadow-lg mt-6"
     ></Button>
 
-    <Label text="App version 1.0.0" class="text-sm text-gray-400 text-center mt-10"></Label>
+    <Label [text]="'features.settings.version' | L" class="text-sm text-gray-400 text-center mt-10"></Label>
   </StackLayout>
 </ScrollView>

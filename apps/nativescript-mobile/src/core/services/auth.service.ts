@@ -1,10 +1,11 @@
 import { LoginDto } from '@travel-planer/prisma-client';
 import { User } from '@prisma/client';
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationSettings } from '@nativescript/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { RouterExtensions } from '@nativescript/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,8 @@ export class AuthService {
   private _isAuthenticated = signal<boolean>(false);
   private _user = signal<User | null>(null);
   private _token = signal<string | null>(null);
+  private router = inject(RouterExtensions);
+  private http = inject(HttpClient);
 
   readonly isAuthenticated = this._isAuthenticated.asReadonly();
   readonly user = this._user.asReadonly();
@@ -22,7 +25,7 @@ export class AuthService {
     return this._isAuthenticated() && !!this._token();
   });
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.initializeAuth();
   }
 
@@ -36,9 +39,12 @@ export class AuthService {
   }
 
   logout(): void {
-    this.clearAuthData();
-
-    this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe();
+    this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+        this.clearAuthData();
+      },
+    });
   }
 
   private setAuthData(token: string): void {
@@ -85,6 +91,7 @@ export class AuthService {
 
   private initializeAuth(): void {
     const token = this.getStoredToken();
+
     if (token) {
       this._token.set(token);
       this._isAuthenticated.set(true);

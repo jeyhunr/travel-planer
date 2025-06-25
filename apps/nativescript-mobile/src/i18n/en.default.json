@@ -13,8 +13,15 @@
         "noAccount": "No account yet?",
         "registerNow": "Register now",
         "requiredFields": "Email and password are required."
-      },
-      "logout": "Logout"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "changePassword": "Change Password",
+      "manageSubscriptions": "Manage Subscriptions",
+      "logout": "Log out",
+      "version": "App version 1.0.0",
+      "chevron": "›"
     },
     "feed": {
       "createFal": "Create new fal"

@@ -1,19 +1,18 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, inject, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'ns-settings',
   templateUrl: './settings.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class SettingsComponent implements OnInit {
-  ngOnInit(): void {
-    console.log('FeedComponent initialized');
-  }
+export class SettingsComponent {
+  authService = inject(AuthService);
 
   logout() {
-    // Implement logout logic here
-    console.log('Logged out');
+    this.authService.logout();
   }
 }
