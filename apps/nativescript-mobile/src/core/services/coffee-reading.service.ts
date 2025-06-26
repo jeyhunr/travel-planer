@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { RouterExtensions } from '@nativescript/angular';
 
 export interface Post {
   uid: string;
@@ -26,6 +27,7 @@ export interface PostDetails extends Post {
 })
 export class CoffeeReadingService {
   private http = inject(HttpClient);
+  private router = inject(RouterExtensions);
   private take = 5;
   private skip = 0;
 
@@ -89,6 +91,22 @@ export class CoffeeReadingService {
       error: (e) => {
         console.log(e);
         this.loadingDetail.set(false);
+      },
+    });
+  }
+
+  sharePost(uid: string): void {
+    this.http.put(`${environment.API_URL}/coffee-readings/share/${uid}`, {}).subscribe({
+      next: () => {
+        this.router.navigate(['/home'], {
+          transition: {
+            name: 'fade',
+            duration: 200,
+          },
+        });
+      },
+      error: (e) => {
+        console.log(e);
       },
     });
   }

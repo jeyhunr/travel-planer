@@ -1,9 +1,10 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit, inject } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, OnInit, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NativeScriptCommonModule } from '@nativescript/angular';
 import { TitleComponent } from '../../../components';
 import { CoffeeReadingService } from '../../../core/services/coffee-reading.service';
 import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'ns-feed-detail',
@@ -14,9 +15,15 @@ import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 export class FeedDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   coffeeReadingService = inject(CoffeeReadingService);
+  authService = inject(AuthService);
 
   post = this.coffeeReadingService.currentPost;
   loading = this.coffeeReadingService.loadingDetail;
+
+  greeting = computed(() => {
+    const user = this.authService.user();
+    return user?.username || 'Guest';
+  });
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -26,7 +33,7 @@ export class FeedDetailComponent implements OnInit {
     }
   }
 
-  toggleShare() {
-    console.log('Share button clicked');
+  toggleShare(uid: string) {
+    this.coffeeReadingService.sharePost(uid);
   }
 }

@@ -41,9 +41,10 @@
       <Label [text]="post()?.overallInterpretation" textWrap="true" class="text-base text-gray-800 mt-6"></Label>
 
       <Button
+        *ngIf="greeting() === post()?.user"
         [text]="'features.home.detail.share' | L"
         class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
-        (tap)="toggleShare()"
+        (tap)="toggleShare(post()?.uid)"
       ></Button>
     </StackLayout>
 
