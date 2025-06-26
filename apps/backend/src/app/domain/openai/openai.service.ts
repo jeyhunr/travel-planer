@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@travel-planer/prisma-client';
@@ -20,7 +20,11 @@ export class OpenaiService {
     });
   }
 
-  async analyzeImageBase64(file: Express.Multer.File, lang: string, token: string): Promise<{ message: string }> {
+  async analyzeImageBase64(
+    file: Express.Multer.File,
+    lang: string,
+    token: string
+  ): Promise<{ message: string; uid: string }> {
     try {
       const decodedToken = this.jwtService.decode(token.split(' ')[1]);
       const email = decodedToken.email;
@@ -48,7 +52,7 @@ export class OpenaiService {
           - bottom left
           - bottom center
           - bottom right
-        4. Give a short visual description of the shape and a symbolic or traditional interpretation.
+        4. Give a fully visual description of the shape and a symbolic or traditional interpretation.
 
         Even if the patterns are abstract or ambiguous, provide a creative interpretation.
 
@@ -103,7 +107,7 @@ export class OpenaiService {
       const cleaned = this.extractJsonFromMarkdown(rawContent);
       const analysis = JSON.parse(cleaned);
 
-      await this.prisma.coffeeReading.create({
+      const data = await this.prisma.coffeeReading.create({
         data: {
           language: analysis.language,
           overallInterpretation: analysis.overall_interpretation,
@@ -120,8 +124,9 @@ export class OpenaiService {
         },
       });
 
-      return { message: 'Image analysis completed successfully.' };
+      return { message: 'Image analysis completed successfully.', uid: data.uid };
     } catch (error) {
+      Logger.log(error);
       throw new InternalServerErrorException('Error analyzing image.');
     }
   }

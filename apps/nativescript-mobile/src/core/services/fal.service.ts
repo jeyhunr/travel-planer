@@ -1,29 +1,58 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { environment } from '../../environments/environment';
+import * as bgHttp from '@nativescript/background-http';
+import { ApplicationSettings } from '@nativescript/core';
+import { File } from '@nativescript/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FalService {
-  private http = inject(HttpClient);
   private router = inject(RouterExtensions);
 
-  loading = signal<boolean>(false);
-
-  createFal(imageSrc: string, language: string) {
+  loading = signal(false);
+  createFal(filePath: string, language: string) {
     this.loading.set(true);
+    const token = ApplicationSettings.getString(environment.TOKEN_KEY, null);
 
-    this.http.post<{ uid: string }>(`${environment.API_URL}/openai/check/`, { image: imageSrc, language }).subscribe({
-      next: (response) => {
-        this.router.navigate(['/feed-detail', response.uid]);
-        this.loading.set(false);
+    const session = bgHttp.session('image-upload');
+    const request: bgHttp.Request = {
+      url: `${environment.API_URL}/openai/check/`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      error: (error) => {
-        this.loading.set(false);
-        console.error(error);
+      description: 'Uploading photo...',
+    };
+
+    const params = [
+      {
+        name: 'language',
+        value: language,
       },
+      {
+        name: 'image',
+        filename: filePath,
+        mimeType: 'image/jpeg',
+      },
+    ];
+
+    const task = session.multipartUpload(params, request);
+
+    task.on('progress', (e) => {
+      console.log(`Upload: ${e.currentBytes} / ${e.totalBytes}`);
+    });
+
+    task.on('error', (e) => {
+      this.loading.set(false);
+    });
+
+    task.on('complete', (e: any) => {
+      // const data = e.data;
+
+      this.router.navigate(['/home']);
+      this.loading.set(false);
     });
   }
 }

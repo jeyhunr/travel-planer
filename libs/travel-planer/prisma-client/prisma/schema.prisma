@@ -67,7 +67,7 @@ model Token {
 model CoffeeReading {
   uid                   String           @id @default(uuid())
   language              String
-  overallInterpretation String           @map("overall_interpretation")
+  overallInterpretation String           @map("overall_interpretation") @db.Text()
   isShared              Boolean          @default(false) @map("is_shared")
   symbols               SymbolDetected[]
   imageUrl              String           @map("image_url")

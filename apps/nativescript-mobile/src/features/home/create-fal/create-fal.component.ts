@@ -4,6 +4,7 @@ import { TitleComponent } from '../../../components/title/title.component';
 import * as camera from '@nativescript/camera';
 import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 import { FalService } from './../../../core/services/fal.service';
+import { ImageSource, knownFolders, path } from '@nativescript/core';
 
 @Component({
   selector: 'ns-create-fal',
@@ -25,17 +26,21 @@ export class CreateFalComponent {
 
   async pickImage(): Promise<void> {
     try {
-      const perms = await camera.requestPermissions();
-
-      if (!perms?.Success) {
-        return;
-      }
+      await camera.requestPermissions();
 
       const imageAsset = await camera.takePicture({ saveToGallery: true, allowsEditing: true });
 
-      this.imageSrc = imageAsset;
+      const source = await ImageSource.fromAsset(imageAsset);
+
+      const folder = knownFolders.temp();
+      const filePath = path.join(folder.path, 'photo.jpg');
+      const saved = source.saveToFile(filePath, 'jpg');
+
+      if (saved) {
+        this.imageSrc = filePath;
+      }
     } catch (error) {
-      console.error('Image capture failed:', error);
+      console.error('Bildaufnahme fehlgeschlagen:', error);
     }
   }
 
