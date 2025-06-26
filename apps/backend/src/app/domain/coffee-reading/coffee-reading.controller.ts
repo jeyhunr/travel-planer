@@ -23,4 +23,10 @@ export class CoffeeReadingController {
   async shareReading(@Param('uid') uid: string, @Req() { headers }) {
     return await this.coffeeReadingService.shareReading(uid, headers.authorization);
   }
+
+  @Get('details/:uid')
+  @UseGuards(JwtAuthGuard)
+  async getReadingDetails(@Param('uid') uid: string) {
+    return await this.coffeeReadingService.getDetails(uid);
+  }
 }

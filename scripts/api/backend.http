@@ -91,3 +91,8 @@ Authorization: Bearer {{authToken}}
 # @name SahreCoffeeRading
 PUT {{baseUrl}}/coffee-readings/share/97be1ee0-704f-4ab7-b5eb-cbaafe3bc300 HTTP/1.1
 Authorization: Bearer {{authToken}}
+
+###
+# @name GetCoffeeRadingDetails
+GET {{baseUrl}}/coffee-readings/details/97be1ee0-704f-4ab7-b5eb-cbaafe3bc300 HTTP/1.1
+Authorization: Bearer {{authToken}}

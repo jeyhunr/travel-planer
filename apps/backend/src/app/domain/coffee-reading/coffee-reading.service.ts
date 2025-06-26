@@ -73,4 +73,42 @@ export class CoffeeReadingService {
       throw new InternalServerErrorException('Error sharing coffee reading');
     }
   }
+
+  async getDetails(uid: string) {
+    try {
+      const reading = await this.prisma.coffeeReading.findUnique({
+        where: { uid },
+        select: {
+          uid: true,
+          overallInterpretation: true,
+          imageUrl: true,
+          createdAt: true,
+          User: { select: { username: true } },
+          symbols: {
+            select: {
+              shape: true,
+              position: true,
+              description: true,
+              meaning: true,
+            },
+          },
+        },
+      });
+
+      if (!reading) {
+        throw new InternalServerErrorException('Coffee reading not found');
+      }
+
+      return {
+        uid: reading.uid,
+        overallInterpretation: reading.overallInterpretation,
+        user: reading.User.username,
+        imageUrl: reading.imageUrl,
+        createdAt: reading.createdAt,
+        sybols: reading.symbols,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error getting coffee reading details');
+    }
+  }
 }
