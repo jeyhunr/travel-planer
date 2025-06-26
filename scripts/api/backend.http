@@ -79,5 +79,15 @@ Content-Type: image/jpg
 
 ###
 # @name GetCoffeeRadings
-GET {{baseUrl}}/coffee-readings/all/3/0 HTTP/1.1
+GET {{baseUrl}}/coffee-readings/all/0/3 HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+# @name GetCoffeeRadings
+GET {{baseUrl}}/coffee-readings/my/0/3 HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+# @name SahreCoffeeRading
+PUT {{baseUrl}}/coffee-readings/share/97be1ee0-704f-4ab7-b5eb-cbaafe3bc300 HTTP/1.1
 Authorization: Bearer {{authToken}}
