@@ -60,3 +60,19 @@ Authorization: Bearer {{authToken}}
 # @name GetMe
 GET {{baseUrl}}/users/me HTTP/1.1
 Authorization: Bearer {{authToken}}
+
+### Upload image + language 
+POST  {{baseUrl}}/openai/check
+Authorization: Bearer {{authToken}}
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="language"
+
+Azerbaijani
+--MyBoundary
+Content-Disposition: form-data; name="image"; filename="coffee.jpg"
+Content-Type: image/jpg
+
+< ./coffee.jpg
+--MyBoundary--

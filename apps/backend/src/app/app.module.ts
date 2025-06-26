@@ -21,6 +21,7 @@ import { OpenAIModule } from './domain/openai/openai.module';
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.string().required(),
         OPENAI_API_KEY: Joi.string().required(),
+        OPENAI_MODEL: Joi.string().required(),
       }),
     }),
   ],
