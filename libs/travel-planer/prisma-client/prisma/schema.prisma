@@ -67,13 +67,13 @@ model Token {
 model CoffeeReading {
   uid                   String           @id @default(uuid())
   language              String
-  overallInterpretation String
-  isShared              Boolean          @default(false)
+  overallInterpretation String           @map("overall_interpretation")
+  isShared              Boolean          @default(false) @map("is_shared")
   symbols               SymbolDetected[]
-  imageUrl              String
-  createdAt             DateTime         @default(now())
+  imageUrl              String           @map("image_url")
+  createdAt             DateTime         @default(now()) @map("created_at")
   User                  User?            @relation(fields: [userUid], references: [uid])
-  userUid               String?
+  userUid               String?          @map("user_uid")
 
   @@map("coffee_readings")
 }
@@ -85,10 +85,10 @@ model SymbolDetected {
   description String
   meaning     String
 
-  readingId String
+  readingId String        @map("reading_id")
   reading   CoffeeReading @relation(fields: [readingId], references: [uid])
 
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("symbol_detected")
 }

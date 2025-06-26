@@ -76,3 +76,8 @@ Content-Type: image/jpg
 
 < ./coffee.jpg
 --MyBoundary--
+
+###
+# @name GetCoffeeRadings
+GET {{baseUrl}}/coffee-readings/all/3/0 HTTP/1.1
+Authorization: Bearer {{authToken}}

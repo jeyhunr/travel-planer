@@ -8,12 +8,14 @@ import * as Joi from 'joi';
 import { OpenAIModule } from './domain/openai/openai.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CoffeeReadingModule } from './domain/coffee-reading/coffee-raading.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     OpenAIModule,
+    CoffeeReadingModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
