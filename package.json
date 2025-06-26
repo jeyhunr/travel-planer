@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
     "@angular/router": "~19.2.0",
+    "@langchain/core": "^0.3.61",
     "@nativescript/angular": "^19.0.1",
     "@nativescript/camera": "^7.0.0",
     "@nativescript/core": "~8.9.0",

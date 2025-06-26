@@ -5,11 +5,13 @@ import { UsersModule } from './domain/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './domain/auth/auth.module';
 import * as Joi from 'joi';
+import { OpenAIModule } from './domain/openai/openai.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    OpenAIModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
@@ -18,6 +20,7 @@ import * as Joi from 'joi';
         SALT_OR_ROUNDS: Joi.number().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.string().required(),
+        OPENAI_API_KEY: Joi.string().required(),
       }),
     }),
   ],
