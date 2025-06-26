@@ -1,7 +1,6 @@
 import { Component, NO_ERRORS_SCHEMA, inject } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { Page } from '@nativescript/core';
-import { ItemService, Item } from '../../core/services/item.service';
 import { FeedComponent } from './feed/feed.component';
 import { SettingsComponent } from '../settings/settings.component';
 import { HistoryComponent } from './history/history.component';
@@ -13,7 +12,6 @@ import { HistoryComponent } from './history/history.component';
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeComponent {
-  itemService = inject(ItemService);
   page = inject(Page);
 
   constructor() {

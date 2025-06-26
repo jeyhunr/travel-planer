@@ -11,7 +11,7 @@
     <FlexboxLayout justifyContent="space-between" alignItems="center">
       <Label [text]="date()" class="text-gray-400 text-sm"></Label>
       <Label
-        text="Weiterlesen ›"
+        [text]="'components.card.more' | L"
         class="text-amber-600 text-sm font-semibold underline"
         [nsRouterLink]="['/feed-detail', id()]"
       ></Label>

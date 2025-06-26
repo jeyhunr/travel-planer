@@ -2,15 +2,28 @@
   <ScrollView row="0" scrollBarIndicatorVisible="false">
     <StackLayout class="space-y-8">
       <ns-teaser [greeting]="greeting()" [welcomeMessage]="'features.home.feed.welcome' | L" emoji="🎉"> </ns-teaser>
-      <StackLayout *ngFor="let post of myPosts">
+
+      <ActivityIndicator *ngIf="loading()" busy="true"></ActivityIndicator>
+
+      <StackLayout *ngFor="let post of myPosts()">
         <ns-card
-          [imgSrc]="post.imgSrc"
+          [id]="post.uid"
+          [imgSrc]="post.imageUrl"
           [title]="post.title"
-          [date]="post.date"
-          [id]="post.id"
-          [author]="post.author"
+          [date]="post.createdAt"
+          [author]="post.user"
         ></ns-card>
       </StackLayout>
+
+      <Button
+        *ngIf="!loading() && myPosts().length > 4"
+        [text]="'features.home.feed.loadMore' | L"
+        class="bg-amber-500 text-white text-center text-base font-medium py-3 rounded-xl shadow-md mt-4"
+        (tap)="onLoadMore()"
+        [isEnabled]="!loadingMore()"
+      ></Button>
+
+      <ActivityIndicator *ngIf="loadingMore()" busy="true" class="mt-4"></ActivityIndicator>
     </StackLayout>
   </ScrollView>
 

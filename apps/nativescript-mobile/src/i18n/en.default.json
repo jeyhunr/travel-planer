@@ -58,8 +58,14 @@
     "home": {
       "feed": {
         "createFal": "Create new fal",
-        "welcome": " Welcome. It is nice to see you."
+        "welcome": " Welcome. It is nice to see you.",
+        "loadMore": "Load more"
       }
+    }
+  },
+  "components": {
+    "card": {
+      "more": "Read more"
     }
   }
 }
