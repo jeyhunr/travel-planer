@@ -31,12 +31,19 @@ export class CoffeeReadingService {
   private take = 5;
   private skip = 0;
 
+  private takeHistory = 5;
+  private skipHistory = 0;
+
   posts = signal<Post[]>([]);
   loading = signal<boolean>(false);
   loadingMore = signal<boolean>(false);
 
   currentPost = signal<PostDetails | null>(null);
   loadingDetail = signal<boolean>(false);
+
+  historyPosts = signal<Post[]>([]);
+  loadingHistory = signal<boolean>(false);
+  loadingHistoryMore = signal<boolean>(false);
 
   loadPosts(): void {
     this.loading.set(true);
@@ -109,5 +116,45 @@ export class CoffeeReadingService {
         console.log(e);
       },
     });
+  }
+
+  loadHistory(): void {
+    this.loadingHistory.set(true);
+    this.skipHistory = 0;
+
+    this.http
+      .get<Post[]>(`${environment.API_URL}/coffee-readings/my/${this.skipHistory}/${this.takeHistory}`)
+      .subscribe({
+        next: (newPosts) => {
+          this.historyPosts.set(
+            newPosts.map((post) => ({
+              ...post,
+              createdAt: new Date(post.createdAt).toDateString(),
+              imageUrl: `${environment.FILE_URL}${post.imageUrl}`,
+            }))
+          );
+          this.loadingHistory.set(false);
+          this.skipHistory += this.takeHistory;
+        },
+        error: () => {
+          this.loadingHistory.set(false);
+        },
+      });
+  }
+
+  loadMoreHistory(): void {
+    this.loadingHistoryMore.set(true);
+    this.http
+      .get<Post[]>(`${environment.API_URL}/coffee-readings/my/${this.skipHistory}/${this.takeHistory}`)
+      .subscribe({
+        next: (newPosts) => {
+          this.historyPosts.update((currentPosts) => [...currentPosts, ...newPosts]);
+          this.loadingHistoryMore.set(false);
+          this.skipHistory += this.takeHistory;
+        },
+        error: () => {
+          this.loadingHistoryMore.set(false);
+        },
+      });
   }
 }

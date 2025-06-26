@@ -1,28 +1,27 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, inject, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { CardComponent } from '../../../components';
+import { CoffeeReadingService } from '../../../core/services/coffee-reading.service';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 
 @Component({
   selector: 'ns-history',
   templateUrl: './history.component.html',
-  imports: [NativeScriptCommonModule, NativeScriptRouterModule, CardComponent],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule, CardComponent, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HistoryComponent implements OnInit {
+  coffeeReadingService = inject(CoffeeReadingService);
+
+  myPosts = this.coffeeReadingService.historyPosts;
+  loading = this.coffeeReadingService.loadingHistory;
+  loadingMore = this.coffeeReadingService.loadingHistoryMore;
+
   ngOnInit(): void {
-    console.log('History initialized');
+    this.coffeeReadingService.loadHistory();
   }
 
-  myPosts = [
-    {
-      imgSrc: '~/assets/images/coffee-cup.png',
-      title: '"You will soon find clarity in a complex situation."',
-      date: 'June 10, 2025',
-    },
-    {
-      imgSrc: '~/assets/images/coffee.jpg',
-      title: '"A decision from the past will bring rewards."',
-      date: 'May 28, 2025',
-    },
-  ];
+  onLoadMore(): void {
+    this.coffeeReadingService.loadMoreHistory();
+  }
 }

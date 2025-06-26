@@ -1,14 +1,27 @@
 <ScrollView scrollBarIndicatorVisible="false">
   <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
-    <Label text="My Coffee History" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
-    <StackLayout *ngFor="let post of myPosts">
+    <Label [text]="'features.history.title' | L" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
+
+    <ActivityIndicator *ngIf="loading()" busy="true"></ActivityIndicator>
+
+    <StackLayout *ngFor="let post of myPosts()">
       <ns-card
-        [imgSrc]="post.imgSrc"
-        [title]="post.title"
-        [date]="post.date"
-        [id]="post.id"
-        [author]="post.author"
+        [id]="post.uid"
+        [imgSrc]="post.imageUrl"
+        [title]="post.overallInterpretation"
+        [date]="post.createdAt"
+        [author]="post.user"
       ></ns-card>
     </StackLayout>
+
+    <Button
+      *ngIf="!loading() && myPosts().length > 4"
+      [text]="'features.home.feed.loadMore' | L"
+      class="bg-amber-500 text-white text-center text-base font-medium py-3 rounded-xl shadow-md mt-4"
+      (tap)="onLoadMore()"
+      [isEnabled]="!loadingMore()"
+    ></Button>
+
+    <ActivityIndicator *ngIf="loadingMore()" busy="true" class="mt-4"></ActivityIndicator>
   </StackLayout>
 </ScrollView>
