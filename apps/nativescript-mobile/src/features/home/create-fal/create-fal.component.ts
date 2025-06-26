@@ -1,34 +1,39 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, inject, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule } from '@nativescript/angular';
 import { TitleComponent } from '../../../components/title/title.component';
 import * as camera from '@nativescript/camera';
-import { Image } from '@nativescript/core';
+import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { FalService } from './../../../core/services/fal.service';
 
 @Component({
   selector: 'ns-create-fal',
   templateUrl: './create-fal.component.html',
-  imports: [NativeScriptCommonModule, TitleComponent],
+  imports: [NativeScriptCommonModule, TitleComponent, NativeScriptLocalizeModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class CreateFalComponent {
-  imageSrc: string | null = null;
-  selectedLanguage = 'Deutsch';
-  languages = ['Deutsch', 'Türkisch', 'Englisch'];
+  falService = inject(FalService);
+  imageSrc = null;
+
+  loading = this.falService.loading;
+  languages = ['English', 'Azerbaijani', 'German', 'Turkish'].sort((a, b) => a.localeCompare(b));
+  selectedLanguageIndex = 0;
+
+  private getLanguage(): string {
+    return this.languages[this.selectedLanguageIndex];
+  }
 
   async pickImage(): Promise<void> {
     try {
       const perms = await camera.requestPermissions();
 
       if (!perms?.Success) {
-        console.warn('Camera permission denied.');
         return;
       }
 
-      const imageAsset = await camera.takePicture();
-      console.log('Image captured:', imageAsset);
+      const imageAsset = await camera.takePicture({ saveToGallery: true, allowsEditing: true });
 
-      const image = new Image();
-      image.src = imageAsset;
+      this.imageSrc = imageAsset;
     } catch (error) {
       console.error('Image capture failed:', error);
     }
@@ -36,11 +41,14 @@ export class CreateFalComponent {
 
   submitFal() {
     if (!this.imageSrc) {
-      alert('Bitte ein Bild auswählen.');
+      alert('Plaease take a photo first.');
       return;
     }
 
-    console.log('Neuer Fal wird eingereicht mit Sprache:', this.selectedLanguage);
-    console.log('Bild:', this.imageSrc);
+    this.falService.createFal(this.imageSrc, this.getLanguage());
+  }
+
+  onLangChange(e: { value: number }) {
+    this.selectedLanguageIndex = e.value;
   }
 }

@@ -73,6 +73,22 @@
       "history": {
         "title": "My Coffee Reading History",
         "noHistoryFound": "No history found"
+      },
+      "create": {
+        "title": "Create FAL",
+        "subtitle": "Create your new post",
+
+        "photoTitle": "Add photo",
+        "photoSubtitle": "Choose an image or take a new one",
+        "photoButton": "📷 Select photo",
+        "photoChange": "🔄 Choose another photo",
+
+        "languageTitle": "Select language",
+        "languageSubtitle": "In which language should the text be recognized?",
+
+        "submitButton": "🚀 Submit",
+        "analysisInfo": "Your image will be analyzed and the text extracted",
+        "loading": "Processing, please wait"
       }
     }
   },

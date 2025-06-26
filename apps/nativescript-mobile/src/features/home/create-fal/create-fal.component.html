@@ -1,20 +1,31 @@
 <ScrollView>
   <StackLayout class="bg-amber-50 min-h-full px-6 py-8 space-y-8">
     <StackLayout class="text-center mb-4">
-      <ns-title title="Create FAL"></ns-title>
-      <Label text="Erstelle deinen neuen Beitrag" class="text-gray-600 text-base mt-2"></Label>
+      <ns-title [title]="'features.home.create.title' | L"></ns-title>
+      <Label [text]="'features.home.create.subtitle' | L" class="text-gray-600 text-base mt-2"></Label>
     </StackLayout>
 
-    <StackLayout class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-8 items-center space-y-4">
+    <StackLayout *ngIf="loading()" class="text-center py-20">
+      <ActivityIndicator busy="true" class="mb-4"></ActivityIndicator>
+      <Label [text]="'features.home.create.loading' | L" class="text-amber-600"></Label>
+    </StackLayout>
+
+    <StackLayout
+      *ngIf="!loading()"
+      class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-8 items-center space-y-4"
+    >
       <StackLayout *ngIf="!imageSrc" class="items-center space-y-3">
-        <Label text="Foto hinzufügen" class="text-xl font-bold text-gray-800 text-center"></Label>
         <Label
-          text="Wähle ein Bild aus oder nimm ein neues auf"
+          [text]="'features.home.create.photoTitle' | L"
+          class="text-xl font-bold text-gray-800 text-center"
+        ></Label>
+        <Label
+          [text]="'features.home.create.photoSubtitle' | L"
           class="text-gray-500 text-center"
           textWrap="true"
         ></Label>
         <Button
-          text="📷 Foto auswählen"
+          [text]="'features.home.create.photoButton' | L"
           class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-2xl mt-3"
           (tap)="pickImage()"
         ></Button>
@@ -22,34 +33,41 @@
 
       <StackLayout *ngIf="imageSrc" class="items-center space-y-4">
         <Image [src]="imageSrc" class="w-72 h-72 rounded-2xl border-2 border-amber-200" stretch="aspectFill" />
-        <Button text="🔄 Anderes Foto wählen" class="text-amber-600 font-medium underline" (tap)="pickImage()"></Button>
+        <Button
+          [text]="'features.home.create.photoChange' | L"
+          class="text-amber-600 font-medium underline"
+          (tap)="pickImage()"
+        ></Button>
       </StackLayout>
     </StackLayout>
 
-    <StackLayout class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-6 space-y-4">
+    <StackLayout *ngIf="!loading()" class="bg-white rounded-3xl shadow-lg border border-amber-100 px-6 py-6 space-y-4">
       <StackLayout class="items-center space-y-2">
-        <Label text="Sprache auswählen" class="text-xl font-bold text-gray-800 text-center"></Label>
         <Label
-          text="In welcher Sprache soll der Text erkannt werden?"
+          [text]="'features.home.create.languageTitle' | L"
+          class="text-xl font-bold text-gray-800 text-center"
+        ></Label>
+        <Label
+          [text]="'features.home.create.languageSubtitle' | L"
           class="text-gray-500 text-center"
           textWrap="true"
         ></Label>
       </StackLayout>
 
       <StackLayout class="bg-amber-50 rounded-2xl px-4 py-3 mt-4">
-        <ListPicker [items]="languages" />
+        <ListPicker [items]="languages" (selectedIndexChange)="onLangChange($event)" />
       </StackLayout>
     </StackLayout>
 
-    <StackLayout class="mt-8">
+    <StackLayout *ngIf="!loading()" class="mt-8">
       <Button
-        text="🚀 Absenden"
+        [text]="'features.home.create.submitButton' | L"
         class="bg-amber-600 text-white font-bold py-5 rounded-3xl shadow-xl"
         (tap)="submitFal()"
       ></Button>
 
       <Label
-        text="Dein Bild wird analysiert und der Text extrahiert"
+        [text]="'features.home.create.analysisInfo' | L"
         class="text-gray-500 text-sm text-center mt-3"
         textWrap="true"
       ></Label>
