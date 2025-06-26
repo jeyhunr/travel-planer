@@ -60,6 +60,15 @@
         "createFal": "Create new fal",
         "welcome": " Welcome. It is nice to see you.",
         "loadMore": "Load more"
+      },
+      "detail": {
+        "title": "Detail",
+        "loading": "Loading details...",
+        "createdAt": "Created at: ",
+        "fromUser": "From: ",
+        "share": "🔗 Share",
+        "notFound": "Post not found",
+        "symbolsTitle": "Symbols"
       }
     }
   },

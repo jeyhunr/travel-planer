@@ -105,7 +105,7 @@ export class CoffeeReadingService {
         user: reading.User.username,
         imageUrl: reading.imageUrl,
         createdAt: reading.createdAt,
-        sybols: reading.symbols,
+        symbols: reading.symbols,
       };
     } catch (error) {
       throw new InternalServerErrorException('Error getting coffee reading details');

@@ -1,17 +1,55 @@
 <ScrollView>
   <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
-    <ns-title title="Detail"></ns-title>
+    <ns-title [title]="'features.home.detail.title' | L"></ns-title>
 
-    <Image [src]="post.imgSrc" class="w-full h-64 rounded-2xl shadow border border-amber-200" stretch="aspectFill" />
+    <StackLayout *ngIf="loading()" class="text-center py-20">
+      <ActivityIndicator busy="true" class="mb-4"></ActivityIndicator>
+      <Label [text]="'features.home.detail.loading' | L" class="text-amber-600"></Label>
+    </StackLayout>
 
-    <Label [text]="post.text" textWrap="true" class="text-base text-gray-800"></Label>
+    <StackLayout *ngIf="!loading() && post()">
+      <Image
+        [src]="post()?.imageUrl"
+        class="w-full h-64 rounded-2xl shadow border border-amber-200"
+        stretch="aspectFill"
+      />
 
-    <Label [text]="'Gelesen am: ' + post.date" class="text-sm text-gray-500"></Label>
+      <Label
+        [text]="('features.home.detail.createdAt' | L) + (post()?.createdAt | date: 'dd.MM.yyyy')"
+        class="text-sm text-gray-500"
+      ></Label>
 
-    <Button
-      [text]="post.shared ? '🔒 Nicht mehr teilen' : '🔗 Teilen'"
-      class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
-      (tap)="toggleShare()"
-    ></Button>
+      <Label
+        [text]="('features.home.detail.fromUser' | L) + post()?.user"
+        class="text-sm text-amber-600 font-medium"
+      ></Label>
+
+      <StackLayout *ngIf="post()?.symbols?.length" class="mt-6 space-y-4">
+        <Label [text]="'features.detail.symbolsTitle' | L" class="text-lg font-bold text-gray-800"></Label>
+
+        <StackLayout
+          *ngFor="let symbol of post()?.symbols"
+          class="border border-amber-200 rounded-2xl p-4 bg-white shadow space-y-1"
+        >
+          <Label [text]="'🟠 ' + symbol.shape" class="text-base font-semibold text-gray-800" textWrap="true"></Label>
+          <Label [text]="'🟡 ' + symbol.position" class="text-sm text-gray-600" textWrap="true"></Label>
+          <Label [text]="'🔤 ' + symbol.description" class="text-sm text-gray-600 italic" textWrap="true"></Label>
+          <Label [text]="'💬 ' + symbol.meaning" class="text-sm text-gray-800 font-medium" textWrap="true"></Label>
+        </StackLayout>
+      </StackLayout>
+
+      <Label [text]="post()?.overallInterpretation" textWrap="true" class="text-base text-gray-800 mt-6"></Label>
+
+      <Button
+        [text]="'features.home.detail.share' | L"
+        class="bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-lg mt-4"
+        (tap)="toggleShare()"
+      ></Button>
+    </StackLayout>
+
+    <StackLayout *ngIf="!loading() && !post()" class="text-center py-20">
+      <Label text="❌" class="text-6xl mb-4"></Label>
+      <Label [text]="'features.home.detail.notFound' | L" class="text-amber-600 text-lg font-medium"></Label>
+    </StackLayout>
   </StackLayout>
 </ScrollView>

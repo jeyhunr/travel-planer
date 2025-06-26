@@ -1,4 +1,4 @@
-import { Component, computed, inject, NO_ERRORS_SCHEMA, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { CardComponent } from '../../../components';
 import { TeaserComponent } from '../../../components/teaser/teaser.component';

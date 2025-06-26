@@ -15,5 +15,5 @@ export const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
   { path: 'manage-subscriptions', component: ManageScubscripriosnComponent, canActivate: [AuthGuard] },
   { path: 'create-fal', component: CreateFalComponent, canActivate: [AuthGuard] },
-  { path: 'feed-detail/:{id}', component: FeedDetailComponent, canActivate: [AuthGuard] },
+  { path: 'feed-detail/:id', component: FeedDetailComponent, canActivate: [AuthGuard] },
 ];

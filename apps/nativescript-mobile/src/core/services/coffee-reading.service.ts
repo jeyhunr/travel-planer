@@ -10,18 +10,31 @@ export interface Post {
   createdAt: string;
 }
 
+type Symbols = {
+  shape: string;
+  position: string;
+  description: string;
+  meaning: string;
+};
+
+export interface PostDetails extends Post {
+  symbols: Symbols[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class CoffeeReadingService {
   private http = inject(HttpClient);
+  private take = 5;
+  private skip = 0;
 
   posts = signal<Post[]>([]);
   loading = signal<boolean>(false);
   loadingMore = signal<boolean>(false);
 
-  private take = 5;
-  private skip = 0;
+  currentPost = signal<PostDetails | null>(null);
+  loadingDetail = signal<boolean>(false);
 
   loadPosts(): void {
     this.loading.set(true);
@@ -56,6 +69,26 @@ export class CoffeeReadingService {
       },
       error: () => {
         this.loadingMore.set(false);
+      },
+    });
+  }
+
+  getPostDetails(uid: string): void {
+    this.loadingDetail.set(true);
+    this.currentPost.set(null);
+
+    this.http.get<PostDetails>(`${environment.API_URL}/coffee-readings/details/${uid}`).subscribe({
+      next: (post) => {
+        this.currentPost.set({
+          ...post,
+          imageUrl: `${environment.FILE_URL}${post.imageUrl}`,
+          createdAt: new Date(post.createdAt).toDateString(),
+        });
+        this.loadingDetail.set(false);
+      },
+      error: (e) => {
+        console.log(e);
+        this.loadingDetail.set(false);
       },
     });
   }
