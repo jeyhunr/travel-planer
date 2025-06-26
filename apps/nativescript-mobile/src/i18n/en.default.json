@@ -71,7 +71,8 @@
         "symbolsTitle": "Symbols"
       },
       "history": {
-        "title": "My Coffee Reading History"
+        "title": "My Coffee Reading History",
+        "noHistoryFound": "No history found"
       }
     }
   },

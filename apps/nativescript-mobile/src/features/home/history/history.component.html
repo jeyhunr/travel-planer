@@ -1,8 +1,13 @@
 <ScrollView scrollBarIndicatorVisible="false">
   <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
-    <Label [text]="'features.history.title' | L" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
+    <Label [text]="'features.home.history.title' | L" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
 
     <ActivityIndicator *ngIf="loading()" busy="true"></ActivityIndicator>
+    <Label
+      *ngIf="!loading() && myPosts()?.length === 0"
+      [text]="'features.home.history.noHistoryFound' | L"
+      class="text-gray-500 text-center italic mt-10"
+    ></Label>
 
     <StackLayout *ngFor="let post of myPosts()">
       <ns-card
