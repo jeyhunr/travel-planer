@@ -1,5 +1,7 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from '@travel-planer/prisma-client';
 import { readFileSync } from 'fs';
 import OpenAI from 'openai';
 
@@ -8,14 +10,20 @@ export class OpenaiService {
   private openaiClient: OpenAI;
   private readonly openAiModel = this.configService.get<string>('OPENAI_MODEL', 'gpt-4o');
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private jwtService: JwtService,
+    private prisma: PrismaService
+  ) {
     this.openaiClient = new OpenAI({
       apiKey: configService.get<string>('OPENAI_API_KEY'),
     });
   }
 
-  async analyzeImageBase64(file: Express.Multer.File, lang: string): Promise<string> {
+  async analyzeImageBase64(file: Express.Multer.File, lang: string, token: string): Promise<{ message: string }> {
     try {
+      const decodedToken = this.jwtService.decode(token.split(' ')[1]);
+      const email = decodedToken.email;
       const buffer = readFileSync(file.path);
       const base64Image = buffer.toString('base64');
       const imageUrl = `data:image/jpeg;base64,${base64Image}`;
@@ -83,9 +91,42 @@ export class OpenaiService {
         ],
       });
 
-      return response.choices[0].message?.content;
+      const user = await this.prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      const rawContent = response.choices[0].message?.content ?? '';
+      const cleaned = this.extractJsonFromMarkdown(rawContent);
+      const analysis = JSON.parse(cleaned);
+
+      await this.prisma.coffeeReading.create({
+        data: {
+          language: analysis.language,
+          overallInterpretation: analysis.overall_interpretation,
+          userUid: user.uid,
+          imageUrl: file.path,
+          symbols: {
+            create: analysis.symbols_detected.map((symbol) => ({
+              shape: symbol.shape,
+              position: symbol.position,
+              description: symbol.description,
+              meaning: symbol.meaning,
+            })),
+          },
+        },
+      });
+
+      return { message: 'Image analysis completed successfully.' };
     } catch (error) {
       throw new InternalServerErrorException('Error analyzing image.');
     }
+  }
+
+  private extractJsonFromMarkdown(input: string): string {
+    return input.replace(/```(?:json)?/g, '').trim();
   }
 }

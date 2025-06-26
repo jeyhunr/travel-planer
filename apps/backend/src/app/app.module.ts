@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './domain/auth/auth.module';
 import * as Joi from 'joi';
 import { OpenAIModule } from './domain/openai/openai.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -23,6 +25,10 @@ import { OpenAIModule } from './domain/openai/openai.module';
         OPENAI_API_KEY: Joi.string().required(),
         OPENAI_MODEL: Joi.string().required(),
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'uploads'),
+      serveRoot: '/uploads',
     }),
   ],
   controllers: [AppController],

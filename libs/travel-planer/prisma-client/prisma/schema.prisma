@@ -49,6 +49,7 @@ model User {
   deletedAt DateTime? @map("deleted_at")
 
   tokens Token[]
+  posts  CoffeeReading[]
 
   @@map("users")
 }
@@ -61,4 +62,33 @@ model Token {
   userUid   String?
 
   @@map("tokens")
+}
+
+model CoffeeReading {
+  uid                   String           @id @default(uuid())
+  language              String
+  overallInterpretation String
+  isShared              Boolean          @default(false)
+  symbols               SymbolDetected[]
+  imageUrl              String
+  createdAt             DateTime         @default(now())
+  User                  User?            @relation(fields: [userUid], references: [uid])
+  userUid               String?
+
+  @@map("coffee_readings")
+}
+
+model SymbolDetected {
+  uid         String @id @default(uuid())
+  shape       String
+  position    String
+  description String
+  meaning     String
+
+  readingId String
+  reading   CoffeeReading @relation(fields: [readingId], references: [uid])
+
+  createdAt DateTime @default(now())
+
+  @@map("symbol_detected")
 }
