@@ -1,32 +1,44 @@
-<ScrollView scrollBarIndicatorVisible="false">
-  <StackLayout class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10 space-y-6">
-    <Label [text]="'features.home.history.title' | L" class="text-xl font-bold text-gray-800 text-center mb-2"></Label>
+<GridLayout rows="auto, auto, *, auto, auto" class="bg-gradient-to-b from-amber-50 to-white min-h-full px-6 py-10">
+  <Label row="0" [text]="'features.home.history.title' | L" class="text-xl font-bold text-gray-800 text-center mb-2">
+  </Label>
 
-    <ActivityIndicator *ngIf="loading()" busy="true"></ActivityIndicator>
-    <Label
-      *ngIf="!loading() && myPosts()?.length === 0"
-      [text]="'features.home.history.noHistoryFound' | L"
-      class="text-gray-500 text-center italic mt-10"
-    ></Label>
+  <ActivityIndicator row="1" *ngIf="loading() || loadingMore()" busy="true"> </ActivityIndicator>
 
-    <StackLayout *ngFor="let post of myPosts()">
+  <Label
+    row="2"
+    *ngIf="!loading() && myPosts()?.length === 0 && !loadingMore()"
+    [text]="'features.home.history.noHistoryFound' | L"
+    class="text-gray-500 text-center italic mt-10"
+  >
+  </Label>
+
+  <ListView
+    row="2"
+    *ngIf="!loading() && myPosts()?.length > 0 && !loadingMore()"
+    [items]="myPosts()"
+    class="space-y-5"
+    [separatorColor]="'transparent'"
+    (itemLoading)="onItemLoading($event)"
+  >
+    <ng-template let-item="item">
       <ns-card
-        [id]="post.uid"
-        [imgSrc]="post.imageUrl"
-        [title]="post.overallInterpretation"
-        [date]="post.createdAt"
-        [author]="post.user"
-      ></ns-card>
-    </StackLayout>
+        [id]="item.uid"
+        [imgSrc]="item.imageUrl"
+        [title]="item.overallInterpretation"
+        [date]="item.createdAt"
+        [author]="item.user"
+      >
+      </ns-card>
+    </ng-template>
+  </ListView>
 
-    <Button
-      *ngIf="!loading() && myPosts().length > 4"
-      [text]="'features.home.feed.loadMore' | L"
-      class="bg-amber-500 text-white text-center text-base font-medium py-3 rounded-xl shadow-md mt-4"
-      (tap)="onLoadMore()"
-      [isEnabled]="!loadingMore()"
-    ></Button>
-
-    <ActivityIndicator *ngIf="loadingMore()" busy="true" class="mt-4"></ActivityIndicator>
-  </StackLayout>
-</ScrollView>
+  <Button
+    row="3"
+    *ngIf="!loading() && myPosts().length > 4"
+    [text]="'features.home.feed.loadMore' | L"
+    class="bg-amber-500 text-white text-center text-base font-medium py-3 rounded-xl shadow-md mt-10"
+    (tap)="onLoadMore()"
+    [isEnabled]="!loadingMore()"
+  >
+  </Button>
+</GridLayout>

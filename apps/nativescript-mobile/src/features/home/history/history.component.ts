@@ -3,6 +3,7 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
 import { CardComponent } from '../../../components';
 import { CoffeeReadingService } from '../../../core/services/coffee-reading.service';
 import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
+import { ItemEventData } from '@nativescript/core';
 
 @Component({
   selector: 'ns-history',
@@ -23,5 +24,9 @@ export class HistoryComponent implements OnInit {
 
   onLoadMore(): void {
     this.coffeeReadingService.loadMoreHistory();
+  }
+
+  onItemLoading(e: ItemEventData) {
+    console.log('Item Loading Event', e.index);
   }
 }

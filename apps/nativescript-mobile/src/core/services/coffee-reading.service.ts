@@ -72,7 +72,14 @@ export class CoffeeReadingService {
 
     this.http.get<Post[]>(`${environment.API_URL}/coffee-readings/all/${this.skip}/${this.take}`).subscribe({
       next: (newPosts) => {
-        this.posts.update((currentPosts) => [...currentPosts, ...newPosts]);
+        this.posts.update((currentPosts) => [
+          ...currentPosts,
+          ...newPosts.map((post) => ({
+            ...post,
+            createdAt: new Date(post.createdAt).toDateString(),
+            imageUrl: `${environment.FILE_URL}${post.imageUrl}`,
+          })),
+        ]);
         this.loadingMore.set(false);
         this.skip += this.take;
       },
@@ -148,7 +155,14 @@ export class CoffeeReadingService {
       .get<Post[]>(`${environment.API_URL}/coffee-readings/my/${this.skipHistory}/${this.takeHistory}`)
       .subscribe({
         next: (newPosts) => {
-          this.historyPosts.update((currentPosts) => [...currentPosts, ...newPosts]);
+          this.historyPosts.update((currentPosts) => [
+            ...currentPosts,
+            ...newPosts.map((post) => ({
+              ...post,
+              createdAt: new Date(post.createdAt).toDateString(),
+              imageUrl: `${environment.FILE_URL}${post.imageUrl}`,
+            })),
+          ]);
           this.loadingHistoryMore.set(false);
           this.skipHistory += this.takeHistory;
         },
