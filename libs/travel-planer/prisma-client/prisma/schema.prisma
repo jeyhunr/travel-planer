@@ -82,8 +82,8 @@ model SymbolDetected {
   uid         String @id @default(uuid())
   shape       String
   position    String
-  description String
-  meaning     String
+  description String @db.Text()
+  meaning     String @db.Text()
 
   readingId String        @map("reading_id")
   reading   CoffeeReading @relation(fields: [readingId], references: [uid])

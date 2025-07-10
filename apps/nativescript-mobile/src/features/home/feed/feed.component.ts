@@ -5,6 +5,8 @@ import { TeaserComponent } from '../../../components/teaser/teaser.component';
 import { NativeScriptLocalizeModule } from '@nativescript/localize/angular';
 import { AuthService } from '../../../core/services/auth.service';
 import { CoffeeReadingService } from '../../../core/services/coffee-reading.service';
+import { ItemEventData } from '@nativescript/core';
+
 @Component({
   selector: 'ns-feed',
   templateUrl: './feed.component.html',
@@ -36,5 +38,9 @@ export class FeedComponent implements OnInit {
 
   onLoadMore(): void {
     this.coffeeReadingService.loadMorePosts();
+  }
+
+  onItemLoading(e: ItemEventData) {
+    console.log('Item Loading Event', e.index);
   }
 }

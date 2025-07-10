@@ -35,26 +35,43 @@ export class OpenaiService {
       const prompt = `
         You are an expert in tasseography (coffee ground reading), skilled in interpreting symbolic patterns formed by coffee grounds inside a coffee cup.
 
-        The output must be written entirely in this language: **${lang}**.
+        The output must be written entirely in this language: ${lang}.
 
         Please analyze the image provided, which shows the inside of a coffee cup with remaining coffee grounds.
 
         Your task:
-        1. Examine the shapes and patterns visible in the coffee grounds.
-        2. Identify any symbolic shapes or figures (such as animals, objects, letters, faces, or natural forms).
-        3. For each detected shape, describe its approximate position within the cup, using spatial terms like:
-          - top left
-          - top center
-          - top right
-          - middle left
-          - center
-          - middle right
-          - bottom left
-          - bottom center
-          - bottom right
-        4. Give a fully visual description of the shape and a symbolic or traditional interpretation.
 
-        Even if the patterns are abstract or ambiguous, provide a creative interpretation.
+        Carefully examine the visible shapes and patterns in the coffee grounds.
+
+        Identify only plausible symbolic shapes or figures (such as animals, objects, letters, faces, or natural forms) — avoid any imaginary or highly speculative interpretations.
+
+        For each recognized shape, provide:
+
+        Its approximate position within the cup, using spatial terms like:
+
+        top left
+
+        top center
+
+        top right
+
+        middle left
+
+        center
+
+        middle right
+
+        bottom left
+
+        bottom center
+
+        bottom right
+
+        A visual description that is detailed and precise — at least 2 sentences explaining the pattern’s form and appearance.
+
+        A symbolic or traditional meaning based on known tasseography interpretations.
+
+        Even if the patterns are abstract or ambiguous, try to extract only realistic symbols and offer a thoughtful interpretation.
 
         Respond **only** with the following JSON structure, and ensure all content is translated into: **${lang}**
 
