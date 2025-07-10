@@ -1,16 +1,10 @@
-<StackLayout class="rounded-3xl bg-amber-500 shadow-lg px-6 py-8">
+<StackLayout class="rounded-3xl bg-amber-500 shadow-lg px-5 py-6">
   <StackLayout class="space-y-3">
     <StackLayout orientation="horizontal" horizontalAlignment="center" class="mb-2">
       <Label [text]="emoji()" class="text-2xl mr-3"></Label>
-      <Label [text]="greeting()" class="text-3xl font-bold text-white"></Label>
+      <Label [text]="greeting()" class="text-2xl font-bold text-white"></Label>
     </StackLayout>
 
     <Label [text]="welcomeMessage()" class="text-lg text-white text-center font-medium" textWrap="true"></Label>
-
-    <StackLayout orientation="horizontal" horizontalAlignment="center" class="mt-4">
-      <Label text="•" class="text-white text-xl mx-1 opacity-60"></Label>
-      <Label text="•" class="text-white text-xl mx-1 opacity-80"></Label>
-      <Label text="•" class="text-white text-xl mx-1 opacity-60"></Label>
-    </StackLayout>
   </StackLayout>
 </StackLayout>
