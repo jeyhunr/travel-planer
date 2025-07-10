@@ -15,4 +15,15 @@ export class CardComponent {
   author = input<string>('');
   date = input<string>('');
   id = input<string>('');
+
+  isLiked = false;
+
+  onLike() {
+    this.isLiked = !this.isLiked;
+    console.log(this.isLiked ? 'Liked ❤️' : 'Unliked 🤍');
+  }
+
+  onDislike() {
+    console.log('Disliked 💔');
+  }
 }

@@ -16,5 +16,7 @@
         [nsRouterLink]="['/feed-detail', id()]"
       ></Label>
     </FlexboxLayout>
+
+    <Label [text]="isLiked ? '❤️' : '🤍'" class="text-xl" (tap)="onLike()"></Label>
   </StackLayout>
 </StackLayout>
